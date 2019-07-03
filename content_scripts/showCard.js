@@ -6,12 +6,15 @@
   shadowRoot.style.top = 0;
   shadowRoot.style.right = 0;
   shadowRoot.style.overflowY = 'auto';
+  shadowRoot.style.overflowX = 'hidden';
   shadowRoot.style.maxHeight = '100vh';
 
   const shadow = shadowRoot.attachShadow({mode: 'open'});
   shadowRoot.id = 'wsh-card-container';
   const style = document.createElement('style');
-  style.textContent = `.wsh-card{margin: 4px; background-color: #00feef; padding: 24px; border: 1px solid #777;}`;
+  style.textContent = `
+  .wsh-card{display:flex;align-items:center;flex-direction:column;background-color:#29292d;color:#f8f8f9;border:1px solid #3f3f42;border-radius:2px;font-family:sans-serif;box-sizing:border-box;width:320px;margin:4px;padding:12px;box-shadow:0 4px 16px rgba(12, 12, 13, 0.1)}.wsh-pre-word{margin:0;font-size:14px;color:#8f8f91}.wsh-word{margin:16px 0;font-weight:bold}.wsh-buttons{display:flex;justify-content:center}.wsh-no-button,.wsh-yes-button{background-color:#3f3f42;border-radius:2px;height:32px;width:132px;color:#dededf;border:none}.wsh-no-button:hover,.wsh-yes-button:hover{background-color:#48484c}.wsh-no-button{margin-right:4px}.wsh-yes-button{margin-left:4px}`;
+
   shadow.appendChild(style);
   body.appendChild(shadowRoot);
 })();
