@@ -30,7 +30,6 @@ function showCard(word) {
   buttonNo.textContent = 'No';
   buttonNo.addEventListener('click', () => {
     browser.storage.local.get().then(storage => {
-      console.log(storage[word]);
       browser.storage.local.set({
         [word]: {...storage[word], time: new Date().getTime(), box: 1},
       });
@@ -45,7 +44,6 @@ function showCard(word) {
   buttonYes.textContent = 'Yes';
   buttonYes.addEventListener('click', () => {
     browser.storage.local.get().then(storage => {
-      console.log(storage[word]);
       browser.storage.local.set({
         [word]: {
           ...storage[word],
