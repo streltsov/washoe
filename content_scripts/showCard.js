@@ -31,7 +31,7 @@ function showCard(word) {
     browser.storage.local.get().then(storage => {
       console.log(storage[word]);
       browser.storage.local.set({
-        [word]: {...storage[word], box: 0},
+        [word]: {...storage[word], time: new Date().getTime(), box: 1},
       });
       shadowRoot.remove();
     });
@@ -46,7 +46,11 @@ function showCard(word) {
     browser.storage.local.get().then(storage => {
       console.log(storage[word]);
       browser.storage.local.set({
-        [word]: {...storage[word], box: ++storage[word].box},
+        [word]: {
+          ...storage[word],
+          time: new Date().getTime(),
+          box: ++storage[word].box,
+        },
       });
       shadowRoot.remove();
     });
