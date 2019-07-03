@@ -1,17 +1,28 @@
-function showCard(word) {
+(function createCardContainer() {
   const body = document.querySelector('body');
   const shadowRoot = document.createElement('div');
-  shadowRoot.id = `wsh-${word.replace(/\s/g, '_')}`;
-  body.appendChild(shadowRoot);
-  const shadow = shadowRoot.attachShadow({mode: 'open'});
+  shadowRoot.style.position = 'fixed';
+  shadowRoot.style.zIndex = '9999';
+  shadowRoot.style.top = 0;
+  shadowRoot.style.right = 0;
+  shadowRoot.style.overflowY = 'auto';
+  shadowRoot.style.maxHeight = '100vh';
 
+  const shadow = shadowRoot.attachShadow({mode: 'open'});
+  shadowRoot.id = 'wsh-card-container';
   const style = document.createElement('style');
-  style.textContent = `.wsh-card{padding: 32px;border: 1px solid #ededf0;position: absolute; top: 10px; right: 10px;}`;
+  style.textContent = `.wsh-card{margin: 4px; background-color: #00feef; padding: 24px; border: 1px solid #777;}`;
   shadow.appendChild(style);
+  body.appendChild(shadowRoot);
+})();
+
+function showCard(word) {
+  const cardContainer = document.querySelector('#wsh-card-container')
+    .shadowRoot;
 
   const card = document.createElement('div');
-  card.className = 'wsh-card';
-  shadow.appendChild(card);
+  card.className = `wsh-card wsh-${word.replace(/\s/g, '_')}`;
+  cardContainer.appendChild(card);
 
   const preWordSpan = document.createElement('p');
   preWordSpan.className = 'wsh-pre-word';
@@ -33,7 +44,7 @@ function showCard(word) {
       browser.storage.local.set({
         [word]: {...storage[word], time: new Date().getTime(), box: 1},
       });
-      shadowRoot.remove();
+      card.remove();
     });
   });
   buttonNo.addEventListener('click', () => console.log('No Button'));
@@ -51,7 +62,7 @@ function showCard(word) {
           box: ++storage[word].box,
         },
       });
-      shadowRoot.remove();
+      card.remove();
     });
   });
   buttons.appendChild(buttonYes);
