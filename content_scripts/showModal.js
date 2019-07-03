@@ -21,3 +21,12 @@ const showModal = word => {
   body.appendChild(modal);
 };
 
+const addWordToStorage = (word, meaning = '', example = '') =>
+  browser.storage.local.set({
+    [word]: {
+      meaning: meaning,
+      example: example,
+      box: 1,
+      time: new Date().getTime(),
+    },
+  });

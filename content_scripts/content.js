@@ -11,13 +11,3 @@ browser.runtime.onMessage.addListener(request => {
     showModal(request.selectedText);
   }
 });
-
-const addWordToStorage = (word, meaning = '', example = '') =>
-  browser.storage.local.set({
-    [word]: {
-      meaning: meaning,
-      example: example,
-      box: 1,
-      time: new Date().getTime(),
-    },
-  });
