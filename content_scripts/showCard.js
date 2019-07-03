@@ -1,6 +1,7 @@
 function showCard(word) {
   const body = document.querySelector('body');
   const shadowRoot = document.createElement('div');
+  shadowRoot.id = `wsh-${word.replace(/\s/g, '_')}`;
   body.appendChild(shadowRoot);
   const shadow = shadowRoot.attachShadow({mode: 'open'});
 
