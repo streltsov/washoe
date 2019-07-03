@@ -1,35 +1,49 @@
 'use strict';
 
-function sendMessageToTabs(tabs) {
+function sendMessageToTabs(tabs, word) {
   for (let tab of tabs) {
-    browser.tabs.sendMessage(tab.id, {greeting: 'It Works!'});
+    browser.tabs.sendMessage(tab.id, {greeting: word});
   }
 }
 
-const sendMessage = () =>
+const sendMessage = word =>
   browser.tabs
     .query({
       currentWindow: true,
       active: true,
     })
-    .then(sendMessageToTabs);
+    .then(tabs => sendMessageToTabs(tabs, word));
 
 const check = () => {
   browser.storage.local.get().then(storage => {
     Object.keys(storage).forEach(word => {
-      switch (storage[word].box) {
-        case 1:
-          new Date().getTime() - storage[word].time > 120000 && null //Action
-          break;
-        case 2:
-          new Date().getTime() - storage[word].time > 600000 && null //Action
-          break;
-        case 3:
-          new Date().getTime() - storage[word].time > 3600000 && null //Action
-          break;
-      }
+      isItTimeToReview(storage[word]) ? sendMessage(word) : null;
     });
   });
 };
 
-//setInterval(check, 4000);
+const isItTimeToReview = word => {
+  let spacedTime;
+  switch (word.box) {
+    case 1:
+      spacedTime = 120000;
+      break;
+    case 2:
+      spacedTime = 600000;
+      break;
+    case 3:
+      spacedTime = 3600000;
+      break;
+    case 4:
+      spacedTime = 18000000;
+      break;
+    case 5:
+      spacedTime = 86400000;
+      break;
+    case 6:
+      spacedTime = 432000000;
+      break;
+  }
+  return new Date().getTime() - word.time > spacedTime;
+};
+setInterval(check, 60000);

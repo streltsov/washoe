@@ -57,7 +57,16 @@ function showCard(word) {
   const buttonYes = document.createElement('button');
   buttonYes.className = 'wsh-yes-button';
   buttonYes.textContent = 'Yes';
-  buttonYes.addEventListener('click', () => console.log('Yes Button'));
+  buttonYes.addEventListener('click', () => {
+    browser.storage.local.get().then(storage => {
+      console.log(storage[word]);
+      browser.storage.local.set({
+        [word]: {...storage[word], box: ++storage[word].box},
+      });
+      shadowRoot.remove();
+    });
+    console.log(storage[word]);
+  });
   buttons.appendChild(buttonYes);
   card.appendChild(buttons);
 }
