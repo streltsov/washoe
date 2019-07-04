@@ -4,10 +4,7 @@
   shadowRoot.style.position = 'fixed';
   shadowRoot.style.zIndex = '9999';
   shadowRoot.style.top = 0;
-  shadowRoot.style.right = 0;
-  shadowRoot.style.overflowY = 'auto';
-  shadowRoot.style.overflowX = 'hidden';
-  shadowRoot.style.maxHeight = '100vh';
+  shadowRoot.style.right = 0; shadowRoot.style.overflowY = 'auto'; shadowRoot.style.overflowX = 'hidden'; shadowRoot.style.maxHeight = '100vh';
   shadowRoot.style.display = 'flex';
   shadowRoot.style.flexDirection = 'column';
   shadowRoot.style.alignItems = 'flex-end';
@@ -79,7 +76,7 @@ function showCard(word, meaning, example) {
           box: ++storage[word].box,
         },
       });
-      card.remove();
+      cardScene.remove();
     });
   });
   buttons.appendChild(buttonYes);
