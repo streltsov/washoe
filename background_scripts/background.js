@@ -1,23 +1,27 @@
 'use strict';
 
-function sendMessageToTabs(tabs, word) {
+function sendMessageToTabs(tabs, word, meaning, example) {
   for (let tab of tabs) {
-    browser.tabs.sendMessage(tab.id, {greeting: word});
+    browser.tabs.sendMessage(tab.id, {
+      data: {word: word, meaning: meaning, example: example},
+    });
   }
 }
 
-const sendMessage = word =>
+const sendMessage = (word, meaning = '', example = '') =>
   browser.tabs
     .query({
       currentWindow: true,
       active: true,
     })
-    .then(tabs => sendMessageToTabs(tabs, word));
+    .then(tabs => sendMessageToTabs(tabs, word, meaning, example));
 
 const check = () => {
   browser.storage.local.get().then(storage => {
     Object.keys(storage).forEach(word => {
-      isItTimeToReview(storage[word]) ? sendMessage(word) : null;
+      isItTimeToReview(storage[word])
+        ? sendMessage(word, storage[word].meaning, storage[word].example)
+        : null;
     });
   });
 };

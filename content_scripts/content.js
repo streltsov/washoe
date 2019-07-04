@@ -1,12 +1,12 @@
 'use strict';
 
 browser.runtime.onMessage.addListener(request => {
-  if (request.greeting) {
+  if (request.data) {
     document
       .querySelector('#wsh-card-container')
-      .shadowRoot.querySelector(`.wsh-${request.greeting.replace(/\s/g, '_')}`)
+      .shadowRoot.querySelector(`.wsh-${request.data.word.replace(/\s/g, '_')}`)
       ? null
-      : showCard(request.greeting);
+      : showCard(request.data.word, request.data.meaning, request.data.example);
   }
 });
 

@@ -8,15 +8,18 @@ const showModal = word => {
   wordInput.value = word.toLowerCase();
   const meaningInput = document.createElement('input');
   meaningInput.id = 'wsh-meaning-input';
+  const exampleInput = document.createElement('input');
+  exampleInput.id = 'wsh-example-input';
   const addButton = document.createElement('button');
   addButton.textContent = 'Add';
   addButton.addEventListener('click', () => {
-    addWordToStorage(wordInput.value, meaningInput.value);
+    addWordToStorage(wordInput.value, meaningInput.value, exampleInput.value);
     modal.remove();
   });
 
   modal.appendChild(wordInput);
   modal.appendChild(meaningInput);
+  modal.appendChild(exampleInput);
   modal.appendChild(addButton);
   body.appendChild(modal);
 };
