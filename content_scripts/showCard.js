@@ -78,11 +78,6 @@ function showCard(word, meaning, example) {
   cardBack.className = 'wsh-card__back';
   card.appendChild(cardBack);
 
-  const preWordSpan = document.createElement('p');
-  preWordSpan.className = 'wsh-pre-word';
-  preWordSpan.textContent = 'Do you remember what does this mean:';
-  cardFront.appendChild(preWordSpan);
-
   const wordSpan = document.createElement('span');
   wordSpan.className = 'wsh-word';
   wordSpan.textContent = word;
