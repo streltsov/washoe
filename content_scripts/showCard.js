@@ -44,15 +44,15 @@
     .add-button {
         margin-top: 12px;
     }
-    .wsh-card-scene {
+    .card-scene {
       margin: 4px;
     }
-    .wsh-card-scene,
-    .wsh-card {
+    .card-scene,
+    .card {
         width: 300px;
         height: 112px;
         }
-    .wsh-card {
+    .card {
         position: relative;
         transition: transform 1s;
         transform-style: preserve-3d;
@@ -64,11 +64,11 @@
         border-radius: 2px;
         border: 1px solid #e1e1e2;
     }
-    .wsh-card span {
+    .card span {
       display: block;
       text-align: center;
     }
-    .wsh-card button {
+    .card button {
       background-color: rgba(12, 12, 13, 0.1);
       border: none;
       border-radius: 2px;
@@ -76,42 +76,42 @@
       min-width: 132px;
       padding: 0 8px;
     }
-    .wsh-card button:hover {
+    .card button:hover {
       background-color: rgba(12, 12, 13, 0.2);
     }
-    .wsh-card button:active {
+    .card button:active {
       background-color: rgba(12, 12, 13, 0.3);
     }
-    .wsh-card button:focus {
+    .card button:focus {
       box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3)
     }
-    .wsh-card button::-moz-focus-inner {
+    .card button::-moz-focus-inner {
       border: 0;
     }
 
-    .wsh-word {
+    .word {
       background-color: #ededf0;
       padding: 8px 0;
     }
 
-    .wsh-no-button {
+    .no-button {
       margin: 0 4px;
     }
-    .wsh-yes-button {
+    .yes-button {
       margin: 0 4px;
     }
-    .wsh-card__front {
+    .card__front {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
 }
-    .wsh-buttons {
+    .buttons {
       display: flex;
       justify-content: center;
     }
 
-    .wsh-card__front,
-    .wsh-card__back {
+    .card__front,
+    .card__back {
         backface-visibility: hidden;
         position: absolute;
         height: 100%;
@@ -119,14 +119,14 @@
         background-color: #f9f9fa;
     }
 
-    .wsh-card__back {
+    .card__back {
         transform: rotateY( -180deg );
     }
-    .flipped .wsh-card {
+    .flipped .card {
         transform: rotateY(-180deg);
     }
     .flipped,
-    .flipped .wsh-card {
+    .flipped .card {
         animation: expand 1s;
         animation-fill-mode: forwards;
     }
@@ -147,30 +147,30 @@ function showCard(word, meaning, example) {
     .shadowRoot;
 
   const cardScene = document.createElement('div');
-  cardScene.className = `wsh-card-scene wsh-${word.replace(/\s/g, '_')}`;
+  cardScene.className = `card-scene ${word.replace(/\s/g, '_')}`;
   cardContainer.appendChild(cardScene);
 
   const card = document.createElement('div');
-  card.className = 'wsh-card';
+  card.className = 'card';
   cardScene.appendChild(card);
 
   const cardFront = document.createElement('div');
-  cardFront.className = 'wsh-card__front';
+  cardFront.className = 'card__front';
   card.appendChild(cardFront);
 
   const cardBack = document.createElement('div');
-  cardBack.className = 'wsh-card__back';
+  cardBack.className = 'card__back';
   card.appendChild(cardBack);
 
   const wordSpan = document.createElement('span');
-  wordSpan.className = 'wsh-word';
+  wordSpan.className = 'word';
   wordSpan.textContent = word;
   cardFront.appendChild(wordSpan);
 
   const buttons = document.createElement('div');
   
   const buttonYes = document.createElement('button');
-  buttonYes.className = 'wsh-yes-button';
+  buttonYes.className = 'yes-button';
   buttonYes.textContent = 'I remember';
   buttonYes.addEventListener('click', () => {
     browser.storage.local.get().then(storage => {
@@ -186,9 +186,9 @@ function showCard(word, meaning, example) {
   });
   buttons.appendChild(buttonYes);
 
-  buttons.className = 'wsh-buttons';
+  buttons.className = 'buttons';
   const buttonNo = document.createElement('button');
-  buttonNo.className = 'wsh-no-button';
+  buttonNo.className = 'no-button';
   buttonNo.textContent = 'I forgot';
   buttonNo.addEventListener('click', () => {
     browser.storage.local.get().then(storage => {
@@ -203,25 +203,25 @@ function showCard(word, meaning, example) {
   cardFront.appendChild(buttons);
 
   const wordSpanForBack = document.createElement('span');
-  wordSpanForBack.className = 'wsh-word';
+  wordSpanForBack.className = 'word';
   wordSpanForBack.textContent = word;
   cardBack.appendChild(wordSpanForBack);
 
   const meaningSpan = document.createElement('span');
   meaningSpan.textContent = meaning[0] === ':' ? meaning : ':' + meaning;
-  meaningSpan.className = 'wsh-meaning';
+  meaningSpan.className = 'meaning';
   cardBack.appendChild(meaningSpan);
 
   if (example) {
     const exampleSpan = document.createElement('span');
     exampleSpan.textContent = '«' + example + '»';
-    exampleSpan.className = 'wsh-example';
+    exampleSpan.className = 'example';
     cardBack.appendChild(exampleSpan);
   }
 
   const buttonGotIt = document.createElement('button');
   buttonGotIt.textContent = 'Got it!';
-  buttonGotIt.className = 'wsh-got-it-button';
+  buttonGotIt.className = 'got-it-button';
   buttonGotIt.addEventListener('click', () => cardScene.remove());
   cardBack.appendChild(buttonGotIt);
 }
