@@ -80,10 +80,6 @@
       justify-content: center;
     }
 
-
-
-
-
     .wsh-card__front,
     .wsh-card__back {
         backface-visibility: hidden;
@@ -145,7 +141,7 @@ function showCard(word, meaning, example) {
   buttons.className = 'wsh-buttons';
   const buttonNo = document.createElement('button');
   buttonNo.className = 'wsh-no-button';
-  buttonNo.textContent = 'No';
+  buttonNo.textContent = 'I forgot';
   buttonNo.addEventListener('click', () => {
     browser.storage.local.get().then(storage => {
       browser.storage.local.set({
@@ -158,7 +154,7 @@ function showCard(word, meaning, example) {
 
   const buttonYes = document.createElement('button');
   buttonYes.className = 'wsh-yes-button';
-  buttonYes.textContent = 'Yes';
+  buttonYes.textContent = 'I remember';
   buttonYes.addEventListener('click', () => {
     browser.storage.local.get().then(storage => {
       browser.storage.local.set({
