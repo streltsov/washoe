@@ -49,21 +49,19 @@
     .card-scene,
     .card {
       width: 300px;
-      height: 112px;
+      height: 88px;
     }
     .card {
       position: relative;
       transition: transform 1s;
       transform-style: preserve-3d;
       font-family: 'Fira Sans', sans-serif;
-      font-weight: 400;
       color: #0c0c0d;
       border-radius: 2px;
       border: 1px solid #e1e1e2;
     }
     .card span {
       display: block;
-      text-align: center;
     }
     .card button {
       min-width: 132px;
@@ -79,6 +77,12 @@
       flex-direction: column;
       justify-content: space-around;
     }
+    .word {
+      text-align: center;
+      margin-bottom: 12px;
+      font-weight: bold;
+      color: #333;
+    }
     .buttons {
       display: flex;
       justify-content: center;
@@ -91,10 +95,23 @@
       height: 100%;
       width: 100%;
       background-color: #f9f9fa;
+      box-sizing: border-box;
     }
     
     .card__back {
       transform: rotateY(-180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 12px;
+      overflow: auto;
+    }
+    .meaning, .example {
+      flex-grow: 2;
+    }
+    .got-it-button {
+      align-self: flex-start;
+      margin-top: 12px;
     }
     .flipped .card {
       transform: rotateY(-180deg);
