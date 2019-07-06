@@ -15,54 +15,51 @@
   const style = document.createElement('style');
   style.textContent = `
     .modal {
-        display: flex;
-        flex-direction: column;
-        width: 455px;
-        padding: 12px;
-        margin: 4px;
-        box-sizing: border-box;
-        font-weight: 400;
-        color: #0c0c0d;
-        background-color: #f9f9fa;
-        border-radius: 2px;
-        border: 1px solid #e1e1e2;
-    
+      display: flex;
+      flex-direction: column;
+      width: 455px;
+      padding: 12px;
+      margin: 4px;
+      box-sizing: border-box;
+      font-weight: 400;
+      color: #0c0c0d;
+      background-color: #f9f9fa;
+      border-radius: 2px;
+      border: 1px solid #e1e1e2;
     }
     .word-input {
-        margin-bottom: 12px;
+      margin-bottom: 12px;
     }
     .meaning-textarea,
     .example-textarea {
-        resize: none;
-        height: 100%;
-        padding: 8px;
+      resize: none;
+      height: 100%;
+      padding: 8px;
     }
     .meaning-textarea::placeholder,
     .example-textarea::placeholder {
-        font-size: 14px;
+      font-size: 14px;
     }
     .add-button {
-        margin-top: 12px;
+      margin-top: 12px;
     }
     .card-scene {
       margin: 4px;
     }
     .card-scene,
     .card {
-        width: 300px;
-        height: 112px;
-        }
+      width: 300px;
+      height: 112px;
+    }
     .card {
-        position: relative;
-        transition: transform 1s;
-        transform-style: preserve-3d;
-
-        font-family: 'Fira Sans', sans-serif;
-        font-size: 16px;
-        font-weight: 400;
-        color: #0c0c0d;
-        border-radius: 2px;
-        border: 1px solid #e1e1e2;
+      position: relative;
+      transition: transform 1s;
+      transform-style: preserve-3d;
+      font-family: 'Fira Sans', sans-serif;
+      font-weight: 400;
+      color: #0c0c0d;
+      border-radius: 2px;
+      border: 1px solid #e1e1e2;
     }
     .card span {
       display: block;
@@ -71,12 +68,6 @@
     .card button {
       min-width: 132px;
     }
-
-    .word {
-      background-color: #ededf0;
-      padding: 8px 0;
-    }
-
     .no-button {
       margin: 0 4px;
     }
@@ -87,39 +78,39 @@
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-}
+    }
     .buttons {
       display: flex;
       justify-content: center;
     }
-
+    
     .card__front,
     .card__back {
-        backface-visibility: hidden;
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        background-color: #f9f9fa;
+      backface-visibility: hidden;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: #f9f9fa;
     }
-
+    
     .card__back {
-        transform: rotateY( -180deg );
+      transform: rotateY(-180deg);
     }
     .flipped .card {
-        transform: rotateY(-180deg);
+      transform: rotateY(-180deg);
     }
     .flipped,
     .flipped .card {
-        animation: expand 1s;
-        animation-fill-mode: forwards;
+      animation: expand 1s;
+      animation-fill-mode: forwards;
     }
     @keyframes expand {
-        100% {
-           width: 455px;
-           height: 200px;
-        }
+      100% {
+        width: 455px;
+        height: 200px;
+      }
     }
-`;
+  `;
 
   shadow.appendChild(style);
   body.appendChild(shadowRoot);
