@@ -69,24 +69,7 @@
       text-align: center;
     }
     .card button {
-      background-color: rgba(12, 12, 13, 0.1);
-      border: none;
-      border-radius: 2px;
-      height: 32px;
       min-width: 132px;
-      padding: 0 8px;
-    }
-    .card button:hover {
-      background-color: rgba(12, 12, 13, 0.2);
-    }
-    .card button:active {
-      background-color: rgba(12, 12, 13, 0.3);
-    }
-    .card button:focus {
-      box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3)
-    }
-    .card button::-moz-focus-inner {
-      border: 0;
     }
 
     .word {
@@ -168,7 +151,7 @@ function showCard(word, meaning, example) {
   cardFront.appendChild(wordSpan);
 
   const buttons = document.createElement('div');
-  
+
   const buttonYes = document.createElement('button');
   buttonYes.className = 'yes-button';
   buttonYes.textContent = 'I remember';
