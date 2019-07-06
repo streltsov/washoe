@@ -14,6 +14,36 @@
   shadowRoot.id = 'wsh-card-container';
   const style = document.createElement('style');
   style.textContent = `
+    .modal {
+        display: flex;
+        flex-direction: column;
+        width: 455px;
+        padding: 12px;
+        margin: 4px;
+        box-sizing: border-box;
+        font-weight: 400;
+        color: #0c0c0d;
+        background-color: #f9f9fa;
+        border-radius: 2px;
+        border: 1px solid #e1e1e2;
+    
+    }
+    .word-input {
+        margin-bottom: 12px;
+    }
+    .meaning-textarea,
+    .example-textarea {
+        resize: none;
+        height: 100%;
+        padding: 8px;
+    }
+    .meaning-textarea::placeholder,
+    .example-textarea::placeholder {
+        font-size: 14px;
+    }
+    .add-button {
+        margin-top: 12px;
+    }
     .wsh-card-scene {
       margin: 4px;
     }

@@ -1,27 +1,43 @@
 'use strict';
 
 const showModal = word => {
-  const body = document.querySelector('body');
+  const cardContainer = document.querySelector('#wsh-card-container')
+    .shadowRoot;
+
   const modal = document.createElement('div');
+  modal.className = 'modal';
+
   const wordInput = document.createElement('input');
-  wordInput.id = 'wsh-word-input';
   wordInput.value = word.toLowerCase();
-  const meaningInput = document.createElement('input');
-  meaningInput.id = 'wsh-meaning-input';
-  const exampleInput = document.createElement('input');
-  exampleInput.id = 'wsh-example-input';
+  wordInput.className = 'word-input';
+  wordInput.placeholder = 'Word';
+
+  const meaningTextArea = document.createElement('textarea');
+  meaningTextArea.className = 'meaning-textarea';
+  meaningTextArea.placeholder = 'Meaning';
+
+  const exampleTextArea = document.createElement('textarea');
+  exampleTextArea.className = 'example-textarea';
+  exampleTextArea.placeholder = 'Example';
+
   const addButton = document.createElement('button');
   addButton.textContent = 'Add';
+  addButton.className = 'add-button';
   addButton.addEventListener('click', () => {
-    addWordToStorage(wordInput.value, meaningInput.value, exampleInput.value);
+    addWordToStorage(
+      wordInput.value.toLowerCase(),
+      meaningTextArea.value.toLowerCase(),
+      exampleTextArea.value,
+    );
     modal.remove();
   });
 
   modal.appendChild(wordInput);
-  modal.appendChild(meaningInput);
-  modal.appendChild(exampleInput);
+  modal.appendChild(meaningTextArea);
+  modal.appendChild(exampleTextArea);
   modal.appendChild(addButton);
-  body.appendChild(modal);
+  cardContainer.insertBefore(modal, cardContainer.firstChild);
+  meaningTextArea.focus();
 };
 
 const addWordToStorage = (word, meaning = '', example = '') =>
