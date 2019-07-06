@@ -168,20 +168,7 @@ function showCard(word, meaning, example) {
   cardFront.appendChild(wordSpan);
 
   const buttons = document.createElement('div');
-  buttons.className = 'wsh-buttons';
-  const buttonNo = document.createElement('button');
-  buttonNo.className = 'wsh-no-button';
-  buttonNo.textContent = 'I forgot';
-  buttonNo.addEventListener('click', () => {
-    browser.storage.local.get().then(storage => {
-      browser.storage.local.set({
-        [word]: {...storage[word], time: new Date().getTime(), box: 1},
-      });
-      cardScene.classList.add('flipped');
-    });
-  });
-  buttons.appendChild(buttonNo);
-
+  
   const buttonYes = document.createElement('button');
   buttonYes.className = 'wsh-yes-button';
   buttonYes.textContent = 'I remember';
@@ -198,6 +185,21 @@ function showCard(word, meaning, example) {
     });
   });
   buttons.appendChild(buttonYes);
+
+  buttons.className = 'wsh-buttons';
+  const buttonNo = document.createElement('button');
+  buttonNo.className = 'wsh-no-button';
+  buttonNo.textContent = 'I forgot';
+  buttonNo.addEventListener('click', () => {
+    browser.storage.local.get().then(storage => {
+      browser.storage.local.set({
+        [word]: {...storage[word], time: new Date().getTime(), box: 1},
+      });
+      cardScene.classList.add('flipped');
+    });
+  });
+  buttons.appendChild(buttonNo);
+
   cardFront.appendChild(buttons);
 
   const wordSpanForBack = document.createElement('span');
