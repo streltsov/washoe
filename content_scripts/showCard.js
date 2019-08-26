@@ -169,7 +169,7 @@ function showCard(word, meaning, example) {
         [word]: {
           ...storage[word],
           time: new Date().getTime(),
-          box: ++storage[word].box,
+          stage: ++storage[word].stage,
         },
       });
       cardScene.remove();
@@ -184,7 +184,7 @@ function showCard(word, meaning, example) {
   buttonNo.addEventListener('click', () => {
     browser.storage.local.get().then(storage => {
       browser.storage.local.set({
-        [word]: {...storage[word], time: new Date().getTime(), box: 1},
+        [word]: {...storage[word], time: new Date().getTime(), stage: 0},
       });
       cardScene.classList.add('flipped');
     });

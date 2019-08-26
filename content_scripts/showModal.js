@@ -45,7 +45,7 @@ const addWordToStorage = (word, meaning = '', example = '') =>
     [word]: {
       meaning: meaning,
       example: example,
-      box: 1,
+      stage: 0,
       time: new Date().getTime(),
     },
   });
