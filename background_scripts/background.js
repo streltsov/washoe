@@ -8,12 +8,16 @@ const checkWords = storage =>
   Object.keys(storage).forEach(
     word =>
       isItTimeToReview(storage[word]) &&
-      sendMessage(word, storage[word].meaning, storage[word].example),
+      sendMessageToActiveTab(
+        word,
+        storage[word].meaning,
+        storage[word].example,
+      ),
   );
 
 setInterval(() => browser.storage.local.get().then(checkWords), 6000);
 
-const sendMessage = (word, meaning = '', example = '') =>
+const sendMessageToActiveTab = (word, meaning = '', example = '') =>
   browser.tabs
     .query({
       currentWindow: true,
