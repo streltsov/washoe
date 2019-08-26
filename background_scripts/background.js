@@ -1,12 +1,12 @@
 'use strict';
 
-function sendMessageToTabs(tabs, word, meaning, example) {
+const sendMessageToTabs = (tabs, word, meaning, example) => {
   for (let tab of tabs) {
     browser.tabs.sendMessage(tab.id, {
       data: {word: word, meaning: meaning, example: example},
     });
   }
-}
+};
 
 const sendMessage = (word, meaning = '', example = '') =>
   browser.tabs
@@ -18,11 +18,11 @@ const sendMessage = (word, meaning = '', example = '') =>
 
 const check = () => {
   browser.storage.local.get().then(storage => {
-    Object.keys(storage).forEach(word => {
-      isItTimeToReview(storage[word])
-        ? sendMessage(word, storage[word].meaning, storage[word].example)
-        : null;
-    });
+    Object.keys(storage).forEach(
+      word =>
+        isItTimeToReview(storage[word]) &&
+        sendMessage(word, storage[word].meaning, storage[word].example),
+    );
   });
 };
 
@@ -48,6 +48,6 @@ const isItTimeToReview = word => {
       spacedTime = 432000000;
       break;
   }
-  return new Date().getTime() - word.time > spacedTime;
+  return Date.now() - word.time > spacedTime;
 };
 setInterval(check, 60000);
