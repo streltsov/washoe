@@ -7,11 +7,7 @@ browser.runtime.onMessage.addListener(request => {
       .shadowRoot.querySelector(`.${request.data.word.replace(/\s/g, '_')}`)
       ? null
       : showCard(request.data.word, request.data.meaning, request.data.example);
-  }
-});
-
-browser.runtime.onMessage.addListener(request => {
-  if (request.selectedText) {
+  } else if (request.selectedText) {
     showModal(request.selectedText);
   }
 });
