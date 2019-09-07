@@ -15,7 +15,7 @@ const checkWords = storage =>
       ),
   );
 
-setInterval(() => browser.storage.local.get().then(checkWords), 6000);
+setInterval(() => browser.storage.local.get().then(checkWords), 60000);
 
 const sendMessageToActiveTab = (word, meaning = '', example = '') =>
   browser.tabs
