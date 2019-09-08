@@ -1,6 +1,6 @@
 'use strict';
 
-const INTERVALS = [12000, 60000, 360000, 1800000, 86400000, 432000000];
+const INTERVALS = [120000, 600000, 3600000, 18000000, 86400000, 432000000];
 
 const isItTimeToReview = word => Date.now() - word.time > INTERVALS[word.stage];
 
