@@ -1,218 +1,26 @@
-(function createCardContainer() {
-  const body = document.querySelector('body');
-  const shadowRoot = document.createElement('div');
-  shadowRoot.style.position = 'fixed';
-  shadowRoot.style.zIndex = '9999';
-  shadowRoot.style.top = 0;
-  shadowRoot.style.right = 0;
-  shadowRoot.style.display = 'flex';
-  shadowRoot.style.flexDirection = 'column';
-  shadowRoot.style.alignItems = 'flex-end';
-  shadowRoot.style.userSelect = 'none';
+const createCard = (word, meaning, example) => {
+  const container = createElement('section', 'container');
 
-  const shadow = shadowRoot.attachShadow({mode: 'open'});
-  shadowRoot.id = 'wsh-card-container';
-  const style = document.createElement('style');
-  style.textContent = `
-    .modal {
-      display: flex;
-      flex-direction: column;
-      width: 455px;
-      padding: 12px;
-      margin: 4px;
-      box-sizing: border-box;
-      font-weight: 400;
-      color: #0c0c0d;
-      background-color: #f9f9fa;
-      border-radius: 2px;
-      border: 1px solid #e1e1e2;
-    }
-    .word-input {
-      margin-bottom: 12px;
-    }
-    .meaning-textarea,
-    .example-textarea {
-      resize: none;
-      height: 100%;
-      padding: 8px;
-    }
-    .meaning-textarea::placeholder,
-    .example-textarea::placeholder {
-      font-size: 14px;
-    }
-    .add-button {
-      margin-top: 12px;
-    }
-    .card-scene {
-      margin: 4px;
-    }
-    .card-scene,
-    .card {
-      width: 300px;
-      height: 88px;
-    }
-    .card {
-      position: relative;
-      transition: transform 1s;
-      transform-style: preserve-3d;
-      font-family: 'Fira Sans', sans-serif;
-      color: #0c0c0d;
-      border-radius: 2px;
-      border: 1px solid #e1e1e2;
-    }
-    .card span {
-      display: block;
-    }
-    .card button {
-      min-width: 132px;
-    }
-    .no-button {
-      margin: 0 4px;
-    }
-    .yes-button {
-      margin: 0 4px;
-    }
-    .card__front {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-    }
-    .word {
-      text-align: center;
-      margin-bottom: 12px;
-      font-weight: bold;
-      color: #333;
-    }
-    .buttons {
-      display: flex;
-      justify-content: center;
-    }
-    
-    .card__front,
-    .card__back {
-      backface-visibility: hidden;
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      background-color: #f9f9fa;
-      box-sizing: border-box;
-    }
-    
-    .card__back {
-      transform: rotateY(-180deg);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 12px;
-      overflow: auto;
-    }
-    .meaning, .example {
-      flex-grow: 2;
-    }
-    .got-it-button {
-      align-self: flex-start;
-      margin-top: 12px;
-    }
-    .flipped .card {
-      transform: rotateY(-180deg);
-    }
-    .flipped,
-    .flipped .card {
-      animation: expand 1s;
-      animation-fill-mode: forwards;
-    }
-    @keyframes expand {
-      100% {
-        width: 455px;
-        height: 200px;
-      }
-    }
-  `;
+  const visible = createElement('div', 'visible');
+  const wordSpot = createElement('span', 'word', word);
+  visible.appendChild(wordSpot);
 
-  shadow.appendChild(style);
-  body.appendChild(shadowRoot);
-})();
+  const hidden = createElement('div', 'hidden');
+  const meaningSpot = createElement('span', 'meaning', meaning);
+  const exampleSpot = createElement('span', 'example', example);
+  const buttons = createElement('div', 'buttons');
+  ['again', 'good', 'easy'].forEach(el =>
+    buttons.appendChild(createElement('button', el, el)),
+  );
+  buttons.addEventListener('click', handleButtonClick);
 
-function showCard(word, meaning, example) {
-  const cardContainer = document.querySelector('#wsh-card-container')
-    .shadowRoot;
+  [meaningSpot, exampleSpot, buttons].forEach(el => hidden.appendChild(el));
+  [visible, hidden].forEach(el => container.appendChild(el));
+  visible.addEventListener('click', () => hidden.classList.add('show-hidden'));
+  return container;
+};
 
-  const cardScene = document.createElement('div');
-  cardScene.className = `card-scene ${word.replace(/\s/g, '_')}`;
-  cardContainer.appendChild(cardScene);
+const cardStyles = `.container{display:flex;flex-direction:column;font-family:sans-serif;background:black;color:white;position:fixed;bottom:0;left:0;width:100%;animation-name:fade-in;animation-duration:3s}.word{margin-right:12px}.visible{display:flex;justify-content:center;align-items:center;min-height:52px}.hidden{display:flex;flex-direction:column;justify-content:space-around;align-items:center;height:0;overflow:hidden}.meaning,.example,.buttons{width:100%;max-width:66%}.buttons{display:flex;justify-content:space-around;}.buttons button{background-color:#2a2a2e;color:#fff;border:none;min-width:132px;height:32px}.buttons button:hover{background-color:#38383d}.show-hidden{animation-name:show-up;animation-duration:2s;animation-fill-mode:forwards}@keyframes fade-in{from{opacity:0}to{opacity:1}}@keyframes show-up{from{height:0}to{height:200px}}`;
 
-  const card = document.createElement('div');
-  card.className = 'card';
-  cardScene.appendChild(card);
 
-  const cardFront = document.createElement('div');
-  cardFront.className = 'card__front';
-  card.appendChild(cardFront);
-
-  const cardBack = document.createElement('div');
-  cardBack.className = 'card__back';
-  card.appendChild(cardBack);
-
-  const wordSpan = document.createElement('span');
-  wordSpan.className = 'word';
-  wordSpan.textContent = word;
-  cardFront.appendChild(wordSpan);
-
-  const buttons = document.createElement('div');
-
-  const buttonYes = document.createElement('button');
-  buttonYes.className = 'yes-button';
-  buttonYes.textContent = 'I remember';
-  buttonYes.addEventListener('click', () => {
-    browser.storage.local.get().then(storage => {
-      browser.storage.local.set({
-        [word]: {
-          ...storage[word],
-          time: new Date().getTime(),
-          stage: ++storage[word].stage,
-        },
-      });
-      cardScene.remove();
-    });
-  });
-  buttons.appendChild(buttonYes);
-
-  buttons.className = 'buttons';
-  const buttonNo = document.createElement('button');
-  buttonNo.className = 'no-button';
-  buttonNo.textContent = 'I forgot';
-  buttonNo.addEventListener('click', () => {
-    browser.storage.local.get().then(storage => {
-      browser.storage.local.set({
-        [word]: {...storage[word], time: new Date().getTime(), stage: 0},
-      });
-      cardScene.classList.add('flipped');
-    });
-  });
-  buttons.appendChild(buttonNo);
-
-  cardFront.appendChild(buttons);
-
-  const wordSpanForBack = document.createElement('span');
-  wordSpanForBack.className = 'word';
-  wordSpanForBack.textContent = word;
-  cardBack.appendChild(wordSpanForBack);
-
-  const meaningSpan = document.createElement('span');
-  meaningSpan.textContent = meaning[0] === ':' ? meaning : ':' + meaning;
-  meaningSpan.className = 'meaning';
-  cardBack.appendChild(meaningSpan);
-
-  if (example) {
-    const exampleSpan = document.createElement('span');
-    exampleSpan.textContent = '«' + example + '»';
-    exampleSpan.className = 'example';
-    cardBack.appendChild(exampleSpan);
-  }
-
-  const buttonGotIt = document.createElement('button');
-  buttonGotIt.textContent = 'Got it!';
-  buttonGotIt.className = 'got-it-button';
-  buttonGotIt.addEventListener('click', () => cardScene.remove());
-  cardBack.appendChild(buttonGotIt);
-}
+const handleButtonClick = event => console.log(event.target.className);
