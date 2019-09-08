@@ -1,17 +1,12 @@
 'use strict';
 
-browser.runtime.onMessage.addListener(request => {
-  if (request.data) {
-    document
-      .querySelector('#wsh-card-container')
-      .shadowRoot.querySelector(`.${request.data.word.replace(/\s/g, '_')}`)
-      ? null
-      : showCard(request.data.word, request.data.meaning, request.data.example);
-  } else if (request.selectedText) {
-    showModal(request.selectedText);
-  }
-
-});
+browser.runtime.onMessage.addListener(request =>
+  request.hasOwnProperty('selectedText')
+    ? showModal(request.selectedText)
+    : request.hasOwnProperty('wordData')
+    ? showCard(request.wordData)
+    : null,
+);
 
 const createElement = (el, cl, text) => {
   const element = document.createElement(el);
