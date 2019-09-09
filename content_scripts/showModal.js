@@ -1,28 +1,19 @@
 'use strict';
 
-const showModal = word => {
-  const cardContainer = document.querySelector('#wsh-card-container')
-    .shadowRoot;
+const createModal = word => {
+  const modal = createElement('div', 'modal');
 
-  const modal = document.createElement('div');
-  modal.className = 'modal';
-
-  const wordInput = document.createElement('input');
+  const wordInput = createElement('input', 'word-input');
   wordInput.value = word.toLowerCase();
-  wordInput.className = 'word-input';
   wordInput.placeholder = 'Word';
 
-  const meaningTextArea = document.createElement('textarea');
-  meaningTextArea.className = 'meaning-textarea';
+  const meaningTextArea = createElement('textarea', 'meaning-textarea');
   meaningTextArea.placeholder = 'Meaning';
 
-  const exampleTextArea = document.createElement('textarea');
-  exampleTextArea.className = 'example-textarea';
+  const exampleTextArea = createElement('textarea', 'example-textarea');
   exampleTextArea.placeholder = 'Example';
 
-  const addButton = document.createElement('button');
-  addButton.textContent = 'Add';
-  addButton.className = 'add-button';
+  const addButton = createElement('button', 'add-button', 'Add');
   addButton.addEventListener('click', () => {
     addWordToStorage(
       wordInput.value.toLowerCase(),
@@ -32,12 +23,10 @@ const showModal = word => {
     modal.remove();
   });
 
-  modal.appendChild(wordInput);
-  modal.appendChild(meaningTextArea);
-  modal.appendChild(exampleTextArea);
-  modal.appendChild(addButton);
-  cardContainer.insertBefore(modal, cardContainer.firstChild);
-  meaningTextArea.focus();
+  [wordInput, meaningTextArea, exampleTextArea, addButton].forEach(el =>
+    modal.appendChild(el),
+  );
+  return modal;
 };
 
 const addWordToStorage = (word, meaning = '', example = '') =>
