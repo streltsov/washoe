@@ -2,9 +2,9 @@
 
 browser.runtime.onMessage.addListener(request =>
   request.hasOwnProperty('selectedText')
-    ? showModal(request.selectedText)
+    ? showElement(createModal(request.selectedText))
     : request.hasOwnProperty('wordData')
-    ? showCard(request.wordData)
+    ? showElement(createCard(request.wordData), cardStyles)
     : null,
 );
 
@@ -25,4 +25,3 @@ const showElement = (element, styles) => {
   shadow.appendChild(element);
   document.querySelector('body').appendChild(shadowRoot);
 };
-
