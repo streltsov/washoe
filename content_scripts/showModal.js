@@ -2,38 +2,31 @@
 
 const createModal = word => {
   const modal = createElement('div', 'modal');
-
   const wordInput = createElement('input', 'word-input');
   wordInput.value = word.toLowerCase();
-  wordInput.placeholder = 'Word';
-
-  const meaningTextArea = createElement('textarea', 'meaning-textarea');
-  meaningTextArea.placeholder = 'Meaning';
-
-  const exampleTextArea = createElement('textarea', 'example-textarea');
-  exampleTextArea.placeholder = 'Example';
+  const meaning = createElement('input', 'meaning');
+  const example = createElement('input', 'example');
 
   const addButton = createElement('button', 'add-button', 'Add');
   addButton.addEventListener('click', () => {
     addWordToStorage(
-      wordInput.value.toLowerCase(),
-      meaningTextArea.value.toLowerCase(),
-      exampleTextArea.value,
+      wordInput.value.trim().toLowerCase(),
+      meaning.value.trim(),
+      example.value.trim(),
     );
-    modal.remove();
+    removeShadowDom();
   });
-
-  [wordInput, meaningTextArea, exampleTextArea, addButton].forEach(el =>
-    modal.appendChild(el),
-  );
+  [wordInput, meaning, example, addButton].forEach(el => modal.appendChild(el));
   return modal;
 };
 
+const modalStyles = `.modal{display:flex;justify-content:space-around;align-items:center;width:100%;background-color:#0c0c0d;position:fixed;top:0;left:0;min-height:52px}input{background-color:#2a2a2e;color:#fff;border:none;margin:0 4px;height:32px}button{background-color:#2a2a2e;color:#fff;border:none;height:32px}`;
+
 const addWordToStorage = (word, meaning = '', example = '') =>
-  browser.storage.local.set({
+  browser.storage.sync.set({
     [word]: {
-      meaning: meaning,
-      example: example,
+      meaning,
+      example,
       stage: 0,
       time: new Date().getTime(),
     },

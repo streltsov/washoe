@@ -2,11 +2,15 @@
 
 browser.runtime.onMessage.addListener(request =>
   request.hasOwnProperty('selectedText')
-    ? showElement(createModal(request.selectedText))
-    : request.hasOwnProperty('wordData')
+    ? showElement(createModal(request.selectedText), modalStyles)
+    : request.hasOwnProperty('wordData') && !isWordOnPage()
     ? showElement(createCard(request.wordData), cardStyles)
     : null,
 );
+
+const isWordOnPage = () => Boolean(document.querySelector('#wsh-shadow-root'));
+const removeShadowDom = () =>
+  document.querySelector('#wsh-shadow-root').remove();
 
 const createElement = (el, cl, text) => {
   const element = document.createElement(el);
@@ -18,7 +22,7 @@ const createElement = (el, cl, text) => {
 const showElement = (element, styles) => {
   const shadowRoot = document.createElement('div');
   const shadow = shadowRoot.attachShadow({mode: 'open'});
-  shadowRoot.id = 'wsh-card-container';
+  shadowRoot.id = 'wsh-shadow-root';
   const style = document.createElement('style');
   style.textContent = styles;
   shadow.appendChild(style);
