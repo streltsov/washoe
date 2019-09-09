@@ -25,6 +25,6 @@ const sendMessageToActiveTab = (word, meaning = '', example = '') =>
     })
     .then(tabs =>
       browser.tabs.sendMessage(tabs[0].id, {
-        data: {word: word, meaning: meaning, example: example},
+        wordData: {word, meaning, example},
       }),
     );
