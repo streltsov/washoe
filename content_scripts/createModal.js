@@ -28,6 +28,6 @@ const addWordToStorage = (word, meaning = '', example = '') =>
       meaning,
       example,
       stage: 0,
-      time: new Date().getTime(),
+      time: Date.now(),
     },
   });
