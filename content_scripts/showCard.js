@@ -1,3 +1,5 @@
+'use strict'
+
 const createCard = ({word, meaning, example}) => {
   const container = createElement('section', 'container');
 
