@@ -6,10 +6,8 @@ browser.menus.create({
   contexts: ['selection'],
 });
 
-browser.menus.onClicked.addListener(function(info, tab) {
-  if (info.menuItemId == 'add-selected-word') {
-    browser.tabs.sendMessage(tab.id, {
-      selectedText: info.selectionText,
-    });
-  }
-});
+browser.menus.onClicked.addListener((info, tab) =>
+  browser.tabs.sendMessage(tab.id, {
+    selectedText: info.selectionText,
+  }),
+);
