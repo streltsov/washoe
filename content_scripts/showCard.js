@@ -7,11 +7,17 @@ const createCard = ({word, meaning, example}) => {
 
   const hidden = createElement('div', 'hidden');
   const meaningSpot = createElement('span', 'meaning', `:${meaning}`);
-  const exampleSpot = createElement(
-    'span',
-    'example',
-    `For Example: ${example}`,
-  );
+  hidden.appendChild(meaningSpot);
+
+  if (example) {
+    const exampleSpot = createElement(
+      'span',
+      'example',
+      `For Example: ${example}`,
+    );
+    hidden.appendchild(example);
+  }
+
   const buttons = createElement('div', 'buttons');
   ['again', 'next'].forEach(el =>
     buttons.appendChild(createElement('button', el, el)),
@@ -19,8 +25,8 @@ const createCard = ({word, meaning, example}) => {
   buttons.addEventListener('click', event =>
     handleButtonClick(word, event.target.className),
   );
+  hidden.appendchild(buttons);
 
-  [meaningSpot, exampleSpot, buttons].forEach(el => hidden.appendChild(el));
   [visible, hidden].forEach(el => container.appendChild(el));
   visible.addEventListener('click', () => hidden.classList.add('show-hidden'));
   return container;
