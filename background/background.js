@@ -1,6 +1,15 @@
 'use strict';
 
-const INTERVALS = [12000, 600000, 3600000, 18000000, 86400000, 432000000];
+const INTERVALS = [
+  120000,
+  600000,
+  3600000,
+  18000000,
+  86400000,
+  432000000,
+  2160000000,
+  10368000000,
+];
 const isItTimeToReview = word => Date.now() - word.time > INTERVALS[word.stage];
 const checkWords = storage =>
   Object.keys(storage).forEach(
@@ -23,4 +32,4 @@ const sendMessageToActiveTab = (word, meaning = '', example = '') =>
       }),
     );
 
-setInterval(() => browser.storage.sync.get().then(checkWords), 6000);
+setInterval(() => browser.storage.sync.get().then(checkWords), 60000);
