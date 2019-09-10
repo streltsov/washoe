@@ -27,7 +27,7 @@ const createCard = ({word, meaning, example}) => {
   buttons.addEventListener('click', event =>
     handleButtonClick(word, event.target.className),
   );
-  hidden.appendchild(buttons);
+  hidden.appendChild(buttons);
 
   [visible, hidden].forEach(el => container.appendChild(el));
   visible.addEventListener('click', () => hidden.classList.add('show-hidden'));
