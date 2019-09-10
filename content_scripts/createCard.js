@@ -17,7 +17,7 @@ const createCard = ({word, meaning, example}) => {
       'example',
       `For Example: ${example}`,
     );
-    hidden.appendchild(example);
+    hidden.appendChild(example);
   }
 
   const buttons = createElement('div', 'buttons');
