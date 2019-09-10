@@ -20,8 +20,8 @@
   ],
   "background": {
     "scripts": [
-      "background_scripts/background.js",
-      "background_scripts/menu.js"
+      "background/background.js",
+      "background/menu.js"
     ]
   },
   "permissions": ["tabs", "menus", "storage"]
