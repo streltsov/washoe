@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const createCard = ({word, meaning, example}) => {
   const container = createElement('section', 'container');
@@ -21,8 +21,8 @@ const createCard = ({word, meaning, example}) => {
   }
 
   const buttons = createElement('div', 'buttons');
-  ['again', 'next'].forEach(el =>
-    buttons.appendChild(createElement('button', el, el)),
+  ['Again', 'Next'].forEach(el =>
+    buttons.appendChild(createElement('button', el.toLowerCase(), el)),
   );
   buttons.addEventListener('click', event =>
     handleButtonClick(word, event.target.className),
