@@ -24,6 +24,7 @@ const checkWords = storage =>
 const sendMessageToActiveTab = (word, meaning = '', example = '') =>
   browser.tabs
     .query({
+      currentWindow: true,
       active: true,
     })
     .then(tabs =>
