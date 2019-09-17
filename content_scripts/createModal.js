@@ -2,10 +2,15 @@
 
 const createModal = word => {
   const modal = createElement('div', 'modal');
+
   const wordInput = createElement('input', 'word-input');
   wordInput.value = word.toLowerCase();
+
   const meaning = createElement('input', 'meaning');
+  meaning.placeholder = 'Meaning';
+
   const example = createElement('input', 'example');
+  example.placeholder = 'Example (optional)';
 
   const addButton = createElement('button', 'add-button', 'Add');
   addButton.addEventListener('click', () => {
