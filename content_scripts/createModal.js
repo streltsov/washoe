@@ -25,7 +25,7 @@ const createModal = word => {
   return modal;
 };
 
-const modalStyles = `.modal{display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;width:100%;background-color:#0c0c0d;position:fixed;top:0;left:0;height:min-content}input{padding:4px;background-color:#2a2a2e;color:#fff;border:none;margin:8px;}button{background-color:#2a2a2e;color:#fff;border:none;height:32px}`;
+const modalStyles = `.modal{display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;width:100%;background-color:#0c0c0d;position:fixed;top:0;left:0;height:min-content;z-index:2147483647}input{padding:4px;background-color:#2a2a2e;color:#fff;border:none;margin:8px;}button{background-color:#2a2a2e;color:#fff;border:none;height:32px}`;
 
 const addWordToStorage = (word, meaning = '', example = '') =>
   browser.storage.sync.set({
