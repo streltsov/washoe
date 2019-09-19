@@ -21,7 +21,7 @@ const createElement = (el, cl, text) => {
 
 const showElement = (element, styles) => {
   const shadowRoot = document.createElement('div');
-  const shadow = shadowRoot.attachShadow({mode: 'open'});
+  const shadow = shadowRoot.attachShadow({mode: 'closed'});
   shadowRoot.id = 'wsh-shadow-root';
   const style = document.createElement('style');
   style.textContent = styles;
