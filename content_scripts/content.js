@@ -27,5 +27,5 @@ const showElement = (element, styles) => {
   style.textContent = styles;
   shadow.appendChild(style);
   shadow.appendChild(element);
-  document.querySelector('body').appendChild(shadowRoot);
+  document.body.appendChild(shadowRoot);
 };
