@@ -25,4 +25,5 @@ const showElement = (element, styles) => {
   const style = createElement('style', null, styles);
   [style, element].forEach(el => shadow.appendChild(el));
   document.body.appendChild(shadowRoot);
+  element.matches('.modal') ? element.elements[1].focus() : null;
 };
