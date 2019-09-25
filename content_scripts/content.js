@@ -8,24 +8,21 @@ browser.runtime.onMessage.addListener(request =>
     : null,
 );
 
-const isWordOnPage = () => Boolean(document.querySelector('#wsh-shadow-root'));
+const isWordOnPage = () => Boolean(document.querySelector('.wsh-shadow-root'));
 const removeShadowDom = () =>
-  document.querySelector('#wsh-shadow-root').remove();
+  document.querySelector('.wsh-shadow-root').remove();
 
-const createElement = (el, cl, text) => {
+const createElement = (el, cl = null, text = null) => {
   const element = document.createElement(el);
   element.className = cl;
-  element.textContent = text || null;
+  element.textContent = text;
   return element;
 };
 
 const showElement = (element, styles) => {
-  const shadowRoot = document.createElement('div');
+  const shadowRoot = createElement('div', 'wsh-shadow-root');
   const shadow = shadowRoot.attachShadow({mode: 'closed'});
-  shadowRoot.id = 'wsh-shadow-root';
-  const style = document.createElement('style');
-  style.textContent = styles;
-  shadow.appendChild(style);
-  shadow.appendChild(element);
+  const style = createElement('style', null, styles);
+  [style, element].forEach(el => shadow.appendChild(el));
   document.body.appendChild(shadowRoot);
 };
