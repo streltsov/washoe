@@ -16,25 +16,4 @@ const parseMWL = htmlDocument =>
     examples: iterateExamples(el),
   }));
 
-const wrapDef = meaning => {
-  const li = createElement('li', 'meaning', meaning);
-  li.tabIndex = '1';
-  return li;
-};
-const wrapExam = example => createElement('li', 'example', example);
-
-const wrapItem = el => {
-  const item = wrapDef(el.meaning);
-  const examples = createElement('ul');
-  el.examples.forEach(ex => examples.appendChild(wrapExam(ex)));
-  item.appendChild(examples);
-  return item;
-};
-
-export const showDef = defs => {
-  const definitions = document.createElement('ol');
-  defs.forEach(el => definitions.appendChild(wrapItem(el)));
-  return definitions;
-};
-
 export default parseMWL;
