@@ -1,11 +1,12 @@
-import Search from './views/search';
+import SearchBar from './components/SearchBar';
+
 import {showElement, removeShadowDom} from './utils';
 import onSearchSubmit from './onSearchSubmit';
 
 document.addEventListener('keydown', event => {
   if (event.ctrlKey && event.keyCode == 191) {
     event.preventDefault();
-    showElement(Search(onSearchSubmit));
+    showElement(SearchBar(onSearchSubmit));
   }
 
   if (event.keyCode == 27 || (event.ctrlKey && event.keyCode == 219)) {
