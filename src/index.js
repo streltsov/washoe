@@ -1,7 +1,7 @@
 import SearchBar from './components/SearchBar';
-
-import {showElement, removeShadowDom} from './utils';
-import onSearchSubmit from './onSearchSubmit';
+import Paper from './components/Paper';
+import parserMWL from './parsers/mwl';
+import {getDocument, showElement, removeShadowDom} from './utils';
 
 document.addEventListener('keydown', event => {
   if (event.ctrlKey && event.keyCode == 191) {
@@ -15,11 +15,8 @@ document.addEventListener('keydown', event => {
   }
 });
 
-//const isWordOnPage = () => Boolean(document.querySelector('.wsh-shadow-root'));
-//browser.runtime.onMessage.addListener(request =>
-//  request.hasOwnProperty('selectedText')
-//    ? showElement(createModal(request.selectedText), modalStyles)
-//    : request.hasOwnProperty('wordData') && !isWordOnPage()
-//    ? showElement(createCard(request.wordData), cardStyles)
-//    : null,
-//);
+const onSearchSubmit = query =>
+  getDocument('http://www.learnersdictionary.com/definition/' + query)
+    .then(parserMWL)
+    .then(entries => showElement(Paper(entries)))
+    .catch(console.error);
