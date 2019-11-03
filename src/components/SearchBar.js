@@ -4,7 +4,7 @@ const styles = `input{border:1px solid #0a84ff;box-shadow:0 0 0 1px #0a84ff, 0 0
 
 const SearchBar = onSearch => {
   const container = createElement('section');
-  const style = createElement('style', '', styles);
+  const style = createElement('style', styles);
   const input = createElement('input');
   input.placeholder = 'Type word or phrase';
   input.addEventListener('keydown', event =>

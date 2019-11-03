@@ -1,6 +1,6 @@
-export const createElement = (el, cl = '', text = '') => {
-  const element = document.createElement(el);
-  element.className = cl;
+export const createElement = (el = 'div', text = '') => {
+  const element = document.createElement(el.split('.')[0]);
+  el.split('.')[1] ? (element.className = el.split('.').join(' ')) : null;
   element.textContent = text;
   return element;
 };
@@ -19,7 +19,7 @@ export const removeShadowDom = () =>
   document.querySelector('.wsh-shadow-root').remove();
 
 export const showElement = (element, styles = '') => {
-  const shadowRoot = createElement('div', 'wsh-shadow-root');
+  const shadowRoot = createElement('div.wsh-shadow-root');
   const shadow = shadowRoot.attachShadow({mode: 'closed'});
   const style = createElement('style', '', styles);
 
