@@ -1,5 +1,6 @@
 import SearchBar from './components/SearchBar';
 import Paper from './components/Paper';
+import Card from './components/Card';
 import parserMWL from './parsers/mwl';
 import {getDocument, showElement, removeShadowDom} from './utils';
 
@@ -14,6 +15,12 @@ document.addEventListener('keydown', event => {
     removeShadowDom();
   }
 });
+
+browser.runtime.onMessage.addListener(request =>
+  showElement(Card(request.wordData)),
+);
+
+const isWordOnPage = () => Boolean(document.querySelector('.wsh-shadow-root'));
 
 const onSearchSubmit = query =>
   getDocument('http://www.learnersdictionary.com/definition/' + query)
