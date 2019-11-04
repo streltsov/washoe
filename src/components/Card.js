@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import {createElement, removeShadowDom} from '../utils';
 
 const styles = `.container{display:flex;flex-direction:column;font-family:sans-serif;background-color:#0c0c0d;color:#f9f9fa;position:fixed;bottom:0;left:0;width:100%;z-index:2147483647;animation-name:fade-in;animation-duration:3s}.visible{display:flex;justify-content:center;align-items:center;font-size:16px;min-height:48px}.hidden{display:flex;flex-direction:column;justify-content:space-around;align-items:center;height:0;overflow:hidden}.meaning,.example,.buttons{width:100%;max-width:40ch}.example{font-style:italic;}.buttons{display:flex;justify-content:space-around;}.buttons button{background-color:#2a2a2e;color:#fff;border:none;min-width:132px;height:32px}.buttons button:hover{background-color:#38383d}.show-hidden{animation-name:show-up;animation-duration:.7s;animation-fill-mode:forwards}@keyframes fade-in{from{opacity:0}to{opacity:1}}@keyframes show-up{from{height:0}to{height:200px}}`;
 
@@ -46,7 +46,7 @@ const handleButtonClick = (word, button) => {
       },
     });
   });
-  removeShadowDom();
+  removeShadowDom('-card');
 };
 
 export default Card;

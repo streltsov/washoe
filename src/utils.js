@@ -28,11 +28,11 @@ export const showElement = (element, classes = '') => {
 };
 
 export const existsOnPage = (suffix = '') =>
-  Boolean(document.querySelector('wsh-shadow-root' + suffix));
+  Boolean(document.querySelector('.wsh-shadow-root' + suffix));
 
 export const removeShadowDom = (suffix = '') =>
   document
-    .querySelectorAll('wsh-shadow-root' + suffix)
+    .querySelectorAll('.wsh-shadow-root' + suffix)
     .forEach(el => el.remove());
 
 export const addWordToStorage = (word, meaning, example) => {

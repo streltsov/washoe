@@ -1,4 +1,4 @@
-import {addWordToStorage} from './utils';
+import {addWordToStorage, removeShadowDom} from './utils';
 
 export const meaningListener = event => {
   event.keyCode == 74 && event.target.nextSibling.focus();
@@ -10,6 +10,7 @@ export const meaningListener = event => {
         event.target.offsetParent.querySelector('.title').innerText,
         event.target.firstChild.innerText,
       );
+      removeShadowDom('.paper');
     } else {
       event.target.classList.add('selected');
       event.target.querySelector('li').focus();
@@ -28,6 +29,7 @@ export const exampleListener = event => {
       event.target.parentNode.parentNode.firstChild.innerText,
       event.target.innerText,
     );
+    removeShadowDom('.paper');
   }
 
   if (event.keyCode == 27 || (event.ctrlKey && event.keyCode == 219)) {
