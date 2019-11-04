@@ -7,11 +7,12 @@ const SearchBar = onSearch => {
   const style = createElement('style', styles);
   const input = createElement('input');
   input.placeholder = 'Type word or phrase';
-  input.addEventListener('keydown', event =>
+  input.addEventListener('keydown', event => {
+    event.stopPropagation();
     event.keyCode == 13
       ? (container.parentNode.host.remove(), onSearch(event.target.value))
-      : null,
-  );
+      : null;
+  });
   container.appendChild(style);
   container.appendChild(input);
   setTimeout(() => input.focus(), 0);

@@ -1,6 +1,7 @@
 import {addWordToStorage, removeShadowDom} from './utils';
 
 export const meaningListener = event => {
+  event.stopPropagation();
   event.keyCode == 74 && event.target.nextSibling.focus();
   event.keyCode == 75 && event.target.previousSibling.focus();
 
