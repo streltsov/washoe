@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "Washoe",
+  "version": "2.0.0",
+  "applications": {
+    "gecko": {
+      "id": "washoe@streltsov.com"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["main.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "tabs",
+    "<all_urls>",
+    "storage",
+    "http://www.learnersdictionary.com/definition/"
+  ],
+  "content_security_policy": "default-src 'self'; script-src 'self' 'sha256-[...]'; style-src * 'unsafe-inline'; img-src 'self' data:; connect-src http://www.learnersdictionary.com/definition/;"
+}
