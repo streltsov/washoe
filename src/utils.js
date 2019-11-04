@@ -23,8 +23,8 @@ export const getDocument = async url => {
 export const removeShadowDom = () =>
   document.querySelector('.wsh-shadow-root').remove();
 
-export const showElement = (element, classes) => {
-  const shadowRoot = createElement('div.wsh-shadow-root' + ' ' + classes);
+export const showElement = (element, classes = '') => {
+  const shadowRoot = createElement('div.wsh-shadow-root' + classes);
   const shadow = shadowRoot.attachShadow({mode: 'closed'});
   shadow.appendChild(element);
   document.body.appendChild(shadowRoot);
