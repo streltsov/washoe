@@ -32,3 +32,14 @@ export const showElement = (element, styles = '') => {
   document.body.appendChild(shadowRoot);
   element.matches('.modal') ? element.elements[1].focus() : null;
 };
+
+export const addWordToStorage = (word, meaning, example) => {
+  browser.storage.sync.set({
+    [word]: {
+      meaning,
+      example,
+      stage: 0,
+      time: Date.now(),
+    },
+  });
+};

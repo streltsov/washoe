@@ -12,6 +12,7 @@ const iterateExamples = el =>
 
 const parseMWL = htmlDocument =>
   Array.from(htmlDocument.querySelectorAll('.sense'), el => ({
+    word: htmlDocument.querySelector('#ld_entries_v2_mainh').innerText,
     meaning: getMeaning(el),
     examples: iterateExamples(el),
   }));
