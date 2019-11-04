@@ -23,14 +23,11 @@ export const getDocument = async url => {
 export const removeShadowDom = () =>
   document.querySelector('.wsh-shadow-root').remove();
 
-export const showElement = (element, styles = '') => {
-  const shadowRoot = createElement('div.wsh-shadow-root');
+export const showElement = (element, classes) => {
+  const shadowRoot = createElement('div.wsh-shadow-root' + ' ' + classes);
   const shadow = shadowRoot.attachShadow({mode: 'closed'});
-  const style = createElement('style', '', styles);
-
-  [style, element].forEach(el => shadow.appendChild(el));
+  shadow.appendChild(element);
   document.body.appendChild(shadowRoot);
-  element.matches('.modal') ? element.elements[1].focus() : null;
 };
 
 export const addWordToStorage = (word, meaning, example) => {
