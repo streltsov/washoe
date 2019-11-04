@@ -20,15 +20,20 @@ export const getDocument = async url => {
   return htmlDocument;
 };
 
-export const removeShadowDom = () =>
-  document.querySelector('.wsh-shadow-root').remove();
-
 export const showElement = (element, classes = '') => {
   const shadowRoot = createElement('div.wsh-shadow-root' + classes);
   const shadow = shadowRoot.attachShadow({mode: 'closed'});
   shadow.appendChild(element);
   document.body.appendChild(shadowRoot);
 };
+
+export const existsOnPage = (suffix = '') =>
+  Boolean(document.querySelector('wsh-shadow-root' + suffix));
+
+export const removeShadowDom = (suffix = '') =>
+  document
+    .querySelectorAll('wsh-shadow-root' + suffix)
+    .forEach(el => el.remove());
 
 export const addWordToStorage = (word, meaning, example) => {
   browser.storage.sync.set({
