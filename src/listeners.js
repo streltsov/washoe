@@ -5,7 +5,13 @@ export const meaningListener = event => {
   event.keyCode == 74 && event.target.nextSibling.focus();
   event.keyCode == 75 && event.target.previousSibling.focus();
 
+  if (event.keyCode == 27 || (event.ctrlKey && event.keyCode == 219)) {
+    event.preventDefault();
+    removeShadowDom();
+  }
+
   if (event.keyCode == 13) {
+    event.stopPropagation();
     if (!event.target.querySelector('li')) {
       addWordToStorage(
         event.target.offsetParent.querySelector('.title').innerText,
