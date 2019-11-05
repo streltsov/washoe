@@ -27,6 +27,14 @@ export const showElement = (element, classes = '') => {
   document.body.appendChild(shadowRoot);
 };
 
+export const removeShadowRootBindings = event => {
+  if (event.keyCode == 27 || (event.ctrlKey && event.keyCode == 219)) {
+    event.preventDefault();
+    event.stopPropagation();
+    removeShadowDom();
+  }
+};
+
 export const existsOnPage = (suffix = '') =>
   Boolean(document.querySelector('.wsh-shadow-root' + suffix));
 

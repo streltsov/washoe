@@ -1,16 +1,19 @@
-import {addWordToStorage, removeShadowDom} from './utils';
+import {
+  addWordToStorage,
+  removeShadowDom,
+  removeShadowRootBindings,
+} from './utils';
 
 export const meaningListener = event => {
   event.stopPropagation();
+  event.preventDefault();
   event.keyCode == 74 && event.target.nextSibling.focus();
   event.keyCode == 75 && event.target.previousSibling.focus();
 
-  if (event.keyCode == 27 || (event.ctrlKey && event.keyCode == 219)) {
-    event.preventDefault();
-    removeShadowDom();
-  }
+  removeShadowRootBindings(event);
 
   if (event.keyCode == 13) {
+    event.preventDefault();
     event.stopPropagation();
     if (!event.target.querySelector('li')) {
       addWordToStorage(
@@ -26,6 +29,7 @@ export const meaningListener = event => {
 };
 
 export const exampleListener = event => {
+  event.preventDefault();
   event.stopPropagation();
   event.keyCode == 74 && event.target.nextSibling.focus();
   event.keyCode == 75 && event.target.previousSibling.focus();
@@ -41,6 +45,7 @@ export const exampleListener = event => {
 
   if (event.keyCode == 27 || (event.ctrlKey && event.keyCode == 219)) {
     event.preventDefault();
+    event.stopPropagation();
     event.target.parentElement.parentElement.classList.remove('selected');
     event.target.parentElement.parentElement.focus();
   }

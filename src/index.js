@@ -6,14 +6,10 @@ import {getDocument, showElement, removeShadowDom, existsOnPage} from './utils';
 
 document.addEventListener('keydown', event => {
   if (event.ctrlKey && event.keyCode == 191) {
+    event.stopPropagation();
     event.preventDefault();
     removeShadowDom();
     showElement(SearchBar(onSearchSubmit), '.search-bar');
-  }
-
-  if (event.keyCode == 27 || (event.ctrlKey && event.keyCode == 219)) {
-    event.preventDefault();
-    removeShadowDom();
   }
 });
 
