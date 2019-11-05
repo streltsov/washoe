@@ -1,7 +1,7 @@
 import {createElement} from '../utils';
 import {meaningListener, exampleListener} from '../listeners';
 
-const styles = `section{position:fixed;top:0;bottom:0;left:0;right:0;margin:auto;max-width:75%;max-height:75%;background-color:#f9f9fa;border:2px solid #d7d7db;border-radius:2px;padding:16px;overflow:auto;z-index:99999999}ol > li{font-family:'Open Sans',Helvetica,Arial,sans-serif;color:font-size:18px;font-stretch:normal;letter-spacing:0.2px;line-height:22px;padding-bottom:16px}ol > li:focus,ul > li:focus{border:1px solid #0a84ff;border-radius:2px;box-shadow:0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3)}.selected{border:1px solid #30e60b;border-radius:2px;box-shadow:0 0 0 1px #30e60b, 0 0 0 4px rgba(48, 230, 11, 0.3)}ul > li{font-style:italic;width:max-content}:focus{outline:none}::-moz-focus-inner{border:0}li,h1{color:#333}`;
+const styles = `section{position:fixed;top:0;bottom:0;left:0;right:0;margin:auto;max-width:75%;max-height:75%;background-color:#f9f9fa;border:2px solid #d7d7db;border-radius:2px;padding:16px;overflow:auto;z-index:2147483647}ol > li{font-family:'Open Sans',Helvetica,Arial,sans-serif;color:font-size:18px;font-stretch:normal;letter-spacing:0.2px;line-height:22px;padding-bottom:16px}ol > li:focus,ul > li:focus{border:1px solid #0a84ff;border-radius:2px;box-shadow:0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3)}.selected{border:1px solid #30e60b;border-radius:2px;box-shadow:0 0 0 1px #30e60b, 0 0 0 4px rgba(48, 230, 11, 0.3)}ul > li{font-style:italic;width:max-content}:focus{outline:none}::-moz-focus-inner{border:0}li,h1{color:#333}li{max-width:100%}`;
 
 const Paper = entries => {
   const paper = createElement('section');
