@@ -1,13 +1,13 @@
 const INTERVALS = [
-  120000,
-  600000,
-  3600000,
-  18000000,
-  86400000,
-  432000000,
-  1036800000,
-  2160000000,
-  10368000000,
+  12e4,
+  6e5,
+  36e5,
+  18e6,
+  864e5,
+  432e6,
+  10368e5,
+  216e7,
+  10368e6,
 ];
 const isItTimeToReview = word => Date.now() - word.time > INTERVALS[word.stage];
 const checkWords = storage =>
