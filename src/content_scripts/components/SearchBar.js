@@ -1,23 +1,40 @@
-import {createElement, removeShadowRootBindings} from '../utils';
+import {styleElement} from '../dom-utils';
 
-const styles = `input{border:1px solid #0a84ff;box-shadow:0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);border-radius:2px;height:48px;min-width:440px;font-size:24px;padding:0 12px}input::placeholder{color:#737373}section{padding:36px 52px;border:2px solid #d7d7db;border-radius:4px;max-width:min-content;position:fixed;top:100px;right:0;left:0;margin:0 auto;background-color:#f9f9fa;z-index:2147483647}`;
+const styles = {
+  zIndex: '2147483647',
+  position: 'fixed',
+  margin: 'auto',
+  top: '100px',
+  right: 0,
+  left: 0,
 
-const SearchBar = onSearch => {
-  const container = createElement('section');
-  const style = createElement('style', styles);
-  const input = createElement('input');
-  input.placeholder = 'Type word or phrase';
+  maxWidth: '736px',
+  width: '75%',
+  height: '48px',
+  fontSize: '15px',
+  paddingInlineStart: '48px',
+  paddingInlineEnd: '48px',
+  background: '#38383D',
+  borderRadius: '3px',
+  color: 'rgba(249, 249, 250, 1)',
+
+  border: 'solid 1px #0a84ff',
+  boxShadow: '0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3)',
+};
+
+const SearchBar = onEnter => {
+  const input = document.createElement('input');
+  console.log('Hello from search bar!');
+  input.className = 'washoe-search-bar';
+  input.placeholder = 'Search for a word';
+  styleElement(input, styles);
   input.addEventListener('keydown', event => {
-    removeShadowRootBindings(event);
-    event.stopPropagation();
-    event.keyCode == 13
-      ? (container.parentNode.host.remove(), onSearch(event.target.value))
-      : null;
+    event.keyCode == 13 && (onEnter(event.target.value), input.remove());
+    ((event.ctrlKey && event.keyCode == 219) || event.keyCode == 27) &&
+      (event.preventDefault(), input.remove());
   });
-  container.appendChild(style);
-  container.appendChild(input);
   setTimeout(() => input.focus(), 0);
-  return container;
+  return input;
 };
 
 export default SearchBar;

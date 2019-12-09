@@ -3,13 +3,14 @@ import Paper from './components/Paper';
 import Card from './components/Card';
 import parserMWL from './parsers/mwl';
 import {getDocument, showElement, removeShadowDom, existsOnPage} from './utils';
+import {removeElement} from './dom-utils';
 
 document.addEventListener('keydown', event => {
   if (event.ctrlKey && event.keyCode == 191) {
     event.stopPropagation();
     event.preventDefault();
-    removeShadowDom();
-    showElement(SearchBar(onSearchSubmit), '.search-bar');
+    removeElement('.washoe-search-bar');
+    document.body.appendChild(SearchBar(onSearchSubmit));
   }
 });
 
