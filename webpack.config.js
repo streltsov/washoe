@@ -1,4 +1,5 @@
 const path = require('path');
+const exec = require('child_process').exec;
 
 module.exports = {
   mode: 'production',
@@ -9,4 +10,19 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'washoe'), // string
   },
+  plugins: [
+    {
+      apply: compiler => {
+        compiler.hooks.afterEmit.tap('AfterEmitPlugin', compilation => {
+          exec(
+            path.resolve(__dirname, 'package-script'),
+            (err, stdout, stderr) => {
+              if (stdout) process.stdout.write(stdout);
+              if (stderr) process.stderr.write(stderr);
+            },
+          );
+        });
+      },
+    },
+  ],
 };
