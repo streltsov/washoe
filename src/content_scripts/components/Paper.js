@@ -1,5 +1,4 @@
 import {createElement, styleElement} from '../dom-utils';
-import {meaningListener, exampleListener} from '../listeners';
 
 const paperStyles = {
   position: 'fixed',
