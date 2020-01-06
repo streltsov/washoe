@@ -1,36 +1,81 @@
-import {createElement} from '../utils';
+import {createElement, styleElement} from '../dom-utils';
 import {meaningListener, exampleListener} from '../listeners';
 
-const styles = `section{position:fixed;top:0;bottom:0;left:0;right:0;margin:auto;max-width:75%;max-height:75%;background-color:#f9f9fa;border:2px solid #d7d7db;border-radius:2px;padding:16px;overflow:auto;z-index:2147483647}ol > li{font-family:'Open Sans',Helvetica,Arial,sans-serif;color:font-size:18px;font-stretch:normal;letter-spacing:0.2px;line-height:22px;padding-bottom:16px}ol > li:focus,ul > li:focus{border:1px solid #0a84ff;border-radius:2px;box-shadow:0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3)}.selected{border:1px solid #30e60b;border-radius:2px;box-shadow:0 0 0 1px #30e60b, 0 0 0 4px rgba(48, 230, 11, 0.3)}ul > li{font-style:italic;width:max-content}:focus{outline:none}::-moz-focus-inner{border:0}li,h1{color:#333}li{max-width:100%}`;
+const paperStyles = {
+  position: 'fixed',
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
+  margin: 'auto',
+  maxWidth: '75%',
+  maxHeight: '75%',
+  backgroundColor: '#39383e',
+  borderRadius: '2px',
+  padding: '16px',
+  overflow: 'auto',
+  zIndex: '2147483647',
 
-const Paper = entries => {
-  const paper = createElement('section');
-  const style = createElement('style', styles);
-  const title = createElement('h1.title', entries[0].word);
+  scrollbarWidth: 'thin',
+  scrollbarColor: '#0a84ff #4a4a4f',
+  color: 'white',
+};
+
+const meaningStyles = {
+  outline: 'none',
+  padding: '8px',
+};
+
+const meaningFocusedStyles = {
+  backgroundColor: '#4b4a4f',
+};
+
+const meaningBluredStyles = {
+  backgroundColor: 'unset',
+};
+
+const Paper = (entries, onEnter) => {
+  const paper = createElement('section.washoe-paper');
+  styleElement(paper, paperStyles);
+
+  const title = createElement('h1', entries[0].word);
   const meaningsList = createElement('ol');
 
   entries.forEach(entry => {
     const meaning = createElement('li');
-    const meaningSpan = createElement('span.meaning', entry.meaning);
+    styleElement(meaning, meaningStyles);
+
+    meaning.addEventListener('focus', () =>
+      styleElement(meaning, meaningFocusedStyles),
+    );
+    meaning.addEventListener('blur', () =>
+      styleElement(meaning, meaningBluredStyles),
+    );
+
+    const meaningSpan = createElement('strong', entry.meaning);
     meaning.tabIndex = '1';
     meaning.appendChild(meaningSpan);
-    meaning.addEventListener('keydown', meaningListener);
     meaning.addEventListener('mousedown', event => event.preventDefault());
 
-    const examplesList = createElement('ul');
-    entry.examples.forEach(ex => {
-      const example = createElement('li', ex);
-      example.tabIndex = '1';
-      example.addEventListener('keydown', exampleListener);
-      example.addEventListener('mousedown', event => event.preventDefault());
-      examplesList.appendChild(example);
+    meaning.addEventListener('keydown', event => {
+      event.preventDefault();
+      event.keyCode == 74 && event.target.nextSibling.focus();
+      event.keyCode == 75 && event.target.previousSibling.focus();
+      event.ctrlKey && event.keyCode == 219 && paper.remove();
+      event.keyCode == 27 && paper.remove();
+      event.keyCode == 13 && onEnter(entry);
     });
+
+    const examplesList = createElement('ul');
+    entry.examples.forEach(ex =>
+      examplesList.appendChild(createElement('li', ex)),
+    );
 
     meaning.appendChild(examplesList);
     meaningsList.appendChild(meaning);
   });
 
-  [style, title, meaningsList].forEach(el => paper.appendChild(el));
+  [title, meaningsList].forEach(el => paper.appendChild(el));
   setTimeout(() => meaningsList.querySelector('li').focus(), 0);
   return paper;
 };
