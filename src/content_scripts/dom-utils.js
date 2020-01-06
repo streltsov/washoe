@@ -1,11 +1,7 @@
 export const createElement = (el = 'div', text = '') => {
-  const element = document.createElement(el.split('.')[0]);
-  el.split('.')[1]
-    ? (element.className = el
-        .split('.')
-        .slice(1)
-        .join(' '))
-    : null;
+  const [tagName, ...classNames] = el.match(/[^\.]+/g);
+  const element = document.createElement(tagName);
+  element.className = classNames.join(' ');
   element.textContent = text;
   return element;
 };
