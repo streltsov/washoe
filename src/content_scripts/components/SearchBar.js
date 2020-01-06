@@ -1,4 +1,4 @@
-import {styleElement} from '../dom-utils';
+import {createElement, styleElement} from '../dom-utils';
 
 const styles = {
   zIndex: '2147483647',
@@ -23,16 +23,18 @@ const styles = {
 };
 
 const SearchBar = onEnter => {
-  const input = document.createElement('input');
-  console.log('Hello from search bar!');
-  input.className = 'washoe-search-bar';
+  const input = createElement('input.washoe-search-bar');
   input.placeholder = 'Search for a word';
   styleElement(input, styles);
+
   input.addEventListener('keydown', event => {
-    event.keyCode == 13 && (onEnter(event.target.value), input.remove());
-    ((event.ctrlKey && event.keyCode == 219) || event.keyCode == 27) &&
+    event.keyCode == 9 && event.preventDefault(); // Prevent focusing next element with Tab
+    event.keyCode == 13 && (onEnter(event.target.value), input.remove()); // Execute function on Enter
+    ((event.ctrlKey && event.keyCode == 219) || event.keyCode == 27) && // Close SearchBar on Ctrl + [ or on Esc
       (event.preventDefault(), input.remove());
   });
+
+  input.addEventListener('blur', () => setTimeout(() => input.focus(), 0));
   setTimeout(() => input.focus(), 0);
   return input;
 };
