@@ -33,7 +33,7 @@ const exampleField = example => {
 
 const Form = ({word = '', meaning = '', examples = ['']}, onSubmit) => {
   // Form
-  const form = createElement('form');
+  const form = createElement('form.washoe-form');
   styleElement(form, styles);
   form.addEventListener('submit', onSubmit);
 
