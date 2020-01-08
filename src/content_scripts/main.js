@@ -5,7 +5,13 @@ import Spinner from './components/Spinner';
 import Form from './components/Form';
 
 import parserMWL from './parsers/mwl';
-import {getDocument, showElement, removeShadowDom, existsOnPage} from './utils';
+import {
+  addWordToStorage,
+  getDocument,
+  showElement,
+  removeShadowDom,
+  existsOnPage,
+} from './utils';
 import {removeElement} from './dom-utils';
 
 document.addEventListener('keydown', event => {
@@ -26,7 +32,8 @@ const onFormSubmit = event => {
   const [word, meaning, ...examples] = Array.from(event.originalTarget.elements)
     .map(el => el.value)
     .filter(x => x);
-  console.log({word, meaning, examples});
+  addWordToStorage({word, meaning, examples});
+  removeElement('.washoe-form');
 };
 
 const onSearchSubmit = query => {
