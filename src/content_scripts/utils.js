@@ -38,3 +38,11 @@ export const addWordToStorage = ({word, meaning, examples}) => {
     },
   });
 };
+
+export const changeWordStage = async (word, next) => {
+  const {[word]: data} = await browser.storage.sync.get(word);
+  const time = Date.now();
+  const stage = next ? data.stage + 1 : 0;
+  const newData = {[word]: {...data, time, stage}};
+  browser.storage.sync.set(newData);
+};

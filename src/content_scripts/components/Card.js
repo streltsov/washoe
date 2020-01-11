@@ -1,54 +1,30 @@
-import {createElement} from '../dom-utils';
+import {createElement, styleElement} from '../dom-utils';
+import {changeWordStage} from '../utils';
 
-const styles = `.container{display:flex;flex-direction:column;font-family:sans-serif;background-color:#0c0c0d;color:#f9f9fa;position:fixed;bottom:0;left:0;width:100%;z-index:2147483647;animation-name:fade-in;animation-duration:3s}.visible{display:flex;justify-content:center;align-items:center;font-size:16px;min-height:48px}.hidden{display:flex;flex-direction:column;justify-content:space-around;align-items:center;height:0;overflow:hidden}.meaning,.example,.buttons{width:100%;max-width:40ch}.example{font-style:italic;}.buttons{display:flex;justify-content:space-around;}.buttons button{background-color:#2a2a2e;color:#fff;border:none;min-width:132px;height:32px}.buttons button:hover{background-color:#38383d}.show-hidden{animation-name:show-up;animation-duration:.7s;animation-fill-mode:forwards}@keyframes fade-in{from{opacity:0}to{opacity:1}}@keyframes show-up{from{height:0}to{height:200px}}`;
-
-const Card = ({word, meaning, examples}) => {
-  const container = createElement('section.container.washoe-card');
-  const style = createElement('style', styles);
-
-  const visible = createElement('div.visible');
-  const wordSpot = createElement('span.word', word);
-  visible.appendChild(wordSpot);
-
-  const hidden = createElement('div.hidden');
-  const meaningSpot = createElement('span.meaning', `:${meaning}`);
-  hidden.appendChild(meaningSpot);
-
-  if (examples.length) {
-    examples.forEach(example => {
-      const exampleSpot = createElement(
-        'span.example',
-        `For Example: ${example}`,
-      );
-      hidden.appendChild(exampleSpot);
-    });
-  }
-
-  const buttons = createElement('div.buttons');
-  ['Again', 'Next'].forEach(el =>
-    buttons.appendChild(createElement('button.' + el.toLowerCase(), el)),
-  );
-  buttons.addEventListener('click', event =>
-    handleButtonClick(word, event.target.className),
-  );
-  hidden.appendChild(buttons);
-
-  [style, visible, hidden].forEach(el => container.appendChild(el));
-  visible.addEventListener('click', () => hidden.classList.add('show-hidden'));
-  return container;
+const wrapperStyles = {
+  backgroundColor: '#000',
+  color: '#fff',
 };
 
-const handleButtonClick = (word, button) => {
-  browser.storage.sync.get().then(storage => {
-    browser.storage.sync.set({
-      [word]: {
-        ...storage[word],
-        time: Date.now(),
-        stage: button == 'next' ? ++storage[word].stage : 0,
-      },
-    });
-  });
+const Card = ({word, meaning, examples}) => {
+  const wrapper = createElement('div.washoe-card');
+  styleElement(wrapper, wrapperStyles);
+  const visible = createElement('div', word);
+  const hidden = createElement();
+  const meaningSpan = createElement('span', meaning);
+  const buttons = createElement();
+  const againButton = createElement('button', 'Again');
+  againButton.addEventListener('click', () => handleButtonClick(word));
+  const nextButton = createElement('button', 'Next');
+  nextButton.addEventListener('click', () => handleButtonClick(word, 1));
+  [againButton, nextButton].forEach(el => buttons.appendChild(el));
+  [meaningSpan, buttons].forEach(el => hidden.appendChild(el));
+  [visible, hidden].forEach(el => wrapper.appendChild(el));
+  return wrapper;
+};
 
+const handleButtonClick = (word, next) => {
+  changeWordStage(word, next);
   browser.runtime.sendMessage({
     action: 'Remove cards from all tabs',
   });

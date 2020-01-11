@@ -10,36 +10,26 @@ const INTERVALS = [
   10368e6,
 ];
 const isItTimeToReview = word => Date.now() - word.time > INTERVALS[word.stage];
+
 const checkWords = storage =>
-  Object.keys(storage).forEach(
-    word =>
-      isItTimeToReview(storage[word]) &&
-      sendMessageToActiveTab(
-        word,
-        storage[word].meaning,
-        storage[word].examples,
-      ),
-  );
-const sendMessageToActiveTab = (word, meaning = '', examples = []) =>
-  browser.tabs
-    .query({
-      currentWindow: true,
-      active: true,
-    })
-    .then(tabs =>
-      browser.tabs.sendMessage(tabs[0].id, {
-        wordData: {word, meaning, examples},
-      }),
-    );
+  Object.keys(storage).forEach(word => {
+    if (isItTimeToReview(storage[word])) {
+      sendMessageToActiveTab({word, ...storage[word]});
+    }
+  });
 
-browser.runtime.onMessage.addListener(() =>
-  browser.tabs.query({}).then(tabs =>
-    tabs.forEach(tab => {
-      browser.tabs.executeScript(tab.id, {
-        code: `document.querySelector('.washoe-card').remove()`,
-      });
-    }),
-  ),
-);
+const sendMessageToActiveTab = async wordData => {
+  const [tab] = await browser.tabs.query({currentWindow: true, active: true});
+  browser.tabs.sendMessage(tab.id, {wordData});
+};
 
-setInterval(() => browser.storage.sync.get().then(checkWords), 60000);
+browser.runtime.onMessage.addListener(async () => {
+  const tabs = await browser.tabs.query({});
+  tabs.forEach(tab => {
+    browser.tabs.executeScript(tab.id, {
+      code: `document.querySelector('.washoe-card') && document.querySelector('.washoe-card').remove()`,
+    });
+  });
+});
+
+setInterval(() => browser.storage.sync.get().then(checkWords), 6000);
