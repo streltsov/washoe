@@ -64,7 +64,7 @@ const Form = ({word = '', meaning = '', examples = ['']}, onSubmit) => {
   [wordField, meaningField, examplesArea, addButton, submit].forEach(field =>
     form.appendChild(field),
   );
-
+  setTimeout(() => wordField.focus(), 0);
   return form;
 };
 
