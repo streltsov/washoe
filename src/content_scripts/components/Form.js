@@ -37,6 +37,10 @@ const Form = ({word = '', meaning = '', examples = ['']}, onSubmit) => {
   const form = createElement('form.washoe-form');
   styleElement(form, styles);
   form.addEventListener('submit', onSubmit);
+  form.addEventListener('keydown', event => {
+    ((event.ctrlKey && event.keyCode == 219) || event.keyCode == 27) && // Remove Form on Ctrl + [ or on Esc
+      (event.preventDefault(), form.remove());
+  });
 
   // Word
   const wordField = createElement('input');
