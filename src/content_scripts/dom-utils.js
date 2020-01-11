@@ -6,6 +6,9 @@ export const createElement = (el = 'div', text = '') => {
   return element;
 };
 
+export const isElementExistsOnPage = element =>
+  Boolean(document.querySelector(element));
+
 export const styleElement = (element, styles) =>
   Object.keys(styles).forEach(prop => (element.style[prop] = styles[prop]));
 

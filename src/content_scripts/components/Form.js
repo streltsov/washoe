@@ -24,6 +24,7 @@ const exampleField = example => {
 
   // Button
   const button = createElement('button', '-');
+  button.type = 'button';
   button.addEventListener('click', () => wrapper.remove());
 
   wrapper.appendChild(field);

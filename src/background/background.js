@@ -17,10 +17,10 @@ const checkWords = storage =>
       sendMessageToActiveTab(
         word,
         storage[word].meaning,
-        storage[word].example,
+        storage[word].examples,
       ),
   );
-const sendMessageToActiveTab = (word, meaning = '', example = '') =>
+const sendMessageToActiveTab = (word, meaning = '', examples = []) =>
   browser.tabs
     .query({
       currentWindow: true,
@@ -28,7 +28,7 @@ const sendMessageToActiveTab = (word, meaning = '', example = '') =>
     })
     .then(tabs =>
       browser.tabs.sendMessage(tabs[0].id, {
-        wordData: {word, meaning, example},
+        wordData: {word, meaning, examples},
       }),
     );
 

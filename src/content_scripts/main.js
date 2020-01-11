@@ -10,9 +10,8 @@ import {
   getDocument,
   showElement,
   removeShadowDom,
-  existsOnPage,
 } from './utils';
-import {removeElement} from './dom-utils';
+import {removeElement, isElementExistsOnPage} from './dom-utils';
 
 document.addEventListener('keydown', event => {
   if (event.ctrlKey && event.keyCode == 191) {
@@ -23,9 +22,11 @@ document.addEventListener('keydown', event => {
   }
 });
 
-browser.runtime.onMessage.addListener(
-  msg => !existsOnPage('-card') && showElement(Card(msg.wordData), '-card'),
-);
+browser.runtime.onMessage.addListener(msg => {
+  if (!isElementExistsOnPage('.washoe-card')) {
+    document.body.appendChild(Card(msg.wordData));
+  }
+});
 
 const onFormSubmit = event => {
   event.preventDefault();

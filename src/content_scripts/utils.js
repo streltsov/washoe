@@ -23,19 +23,16 @@ export const removeShadowRootBindings = event => {
   }
 };
 
-export const existsOnPage = (suffix = '') =>
-  Boolean(document.querySelector('.wsh-shadow-root' + suffix));
-
 export const removeShadowDom = (suffix = '') =>
   document
     .querySelectorAll('.wsh-shadow-root' + suffix)
     .forEach(el => el.remove());
 
-export const addWordToStorage = (word, meaning, example) => {
+export const addWordToStorage = ({word, meaning, examples}) => {
   browser.storage.sync.set({
     [word]: {
       meaning,
-      example,
+      examples,
       stage: 0,
       time: Date.now(),
     },
