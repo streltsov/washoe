@@ -36,7 +36,7 @@ browser.runtime.onMessage.addListener(() =>
   browser.tabs.query({}).then(tabs =>
     tabs.forEach(tab => {
       browser.tabs.executeScript(tab.id, {
-        code: `document.querySelector('.wsh-shadow-root-card').remove()`,
+        code: `document.querySelector('.washoe-card').remove()`,
       });
     }),
   ),
