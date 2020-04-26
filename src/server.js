@@ -1,5 +1,6 @@
 const server = require('http').createServer();
 const io = require('socket.io')(server);
+require('dotenv').config();
 
 io.on('connection', client => {
   console.log('Connected');
