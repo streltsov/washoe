@@ -1,4 +1,5 @@
 const server = require('http').createServer();
+const {pool} = require('./db');
 const io = require('socket.io')(server);
 require('dotenv').config();
 
