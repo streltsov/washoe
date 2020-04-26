@@ -9,6 +9,7 @@
   "author": "Herman Streltsov",
   "license": "MIT",
   "dependencies": {
+    "pg": "^8.0.3",
     "socket.io": "^2.3.0"
   }
 }
