@@ -1,6 +1,7 @@
 const {pool} = require('./db');
 
 exports.createUser = cb => userData =>
+{
   pool.connect((err, client, done) => {
 
     const shouldAbort = err => {
@@ -13,6 +14,7 @@ exports.createUser = cb => userData =>
       }
       return !!err
     }
+
     client.query('BEGIN', err => {
       if (shouldAbort(err)) return
       const queryText = 'INSERT INTO users(email, password, created_on) VALUES($1, $2, $3) RETURNING email, password, created_on'
@@ -21,7 +23,12 @@ exports.createUser = cb => userData =>
           console.log('Error: ', err);
           return;
         }
+        client.query('COMMIT', err => {
+          if (err) console.error('Error committing transaction', err.stack);
+          done()
+        })
         cb(res);
       })
     })
   })
+}
