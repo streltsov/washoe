@@ -7,17 +7,11 @@ require('dotenv').config();
 
 let clients = [];
 
-//setInterval(() => clients.forEach(email => getScheduledWord(email).then(console.log)), 3000);
-
 io.sockets
   .on('connection', onConnection )
-  .on('connection', socketioJwt.authorize({secret: process.env.SECRETKEY, timeout: 15000 }) )
+  .on('connection', socketioJwt.authorize({secret: process.env.SECRETKEY, timeout: 3000 }) )
   .on('authenticated', onAuthenticated)
-
-//io.clients((error, clients) => {
-//  if (error) throw error;
-//  console.log(clients);
-//});
+  .on('disconnect', onDisconnect);
 
 function onLogIn(client) {
   return async function(userDataJson) {
@@ -34,18 +28,20 @@ function onLogIn(client) {
   }
 };
 
-function onSignUp(userDataJson) {
-  const userData = JSON.parse(userDataJson);
-  const token = jwt.sign({email: userData.email}, process.env.SECRETKEY)
-  const sentToken = () => io.to(client.id).emit('token', token);
-  createUser(sentToken)(userData);
+function onSignUp(client) {
+  return async function(userDataJson) {
+    const userData = JSON.parse(userDataJson);
+    const token = jwt.sign({email: userData.email}, process.env.SECRETKEY)
+    const sentToken = () => io.to(client.id).emit('token', token);
+    createUser(sentToken)(userData);
+  }
 };
 
 function onConnection (client) {
   console.log('Connected!');
   client
     .on('login', onLogIn(client))
-    .on('signup', onSignUp)
+    .on('signup', onSignUp(client))
 };
 
 function onAddWord(email) {
