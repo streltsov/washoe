@@ -1,17 +1,14 @@
 const server = require('http').createServer();
-const {createUser, fetchUser, getScheduledWord, addWord} = require('./dbQueries');
+const {createUser, fetchUser, getScheduledWord, addWord, updateStage} = require('./dbQueries');
 const jwt = require('jsonwebtoken');
 const socketioJwt = require('socketio-jwt');
 const io = require('socket.io')(server);
 require('dotenv').config();
 
-let clients = [];
-
 io.sockets
   .on('connection', onConnection )
   .on('connection', socketioJwt.authorize({secret: process.env.SECRETKEY, timeout: 3000 }) )
   .on('authenticated', onAuthenticated)
-  .on('disconnect', onDisconnect);
 
 function onLogIn(client) {
   return async function(userDataJson) {
@@ -46,24 +43,38 @@ function onConnection (client) {
 
 function onAddWord(email) {
   return function(data) {
-    addWord(console.log)({...JSON.parse(data), email});
     console.log('Word: ', data);
+    addWord(console.log)({...JSON.parse(data), email});
   }
 }
 
 function onAuthenticated(socket) {
-  const { email } = socket.decoded_token;
-  clients.push(email);
-  socket.on('add word', onAddWord(email));
-  socket.on('disconnect', () => {
-    clients = clients.filter(el => el != email);
-  });
-  const sendWord = wordData => io.to(socket.id).emit('word', JSON.stringify(wordData[0]));
-  setInterval(() => getScheduledWord('helluva@mail.me').then(sendWord), 3000);
-}
+  console.log('Auth socket: ', socket.decoded_token.email);
 
-function onDisconnect(socket) {
-  console.log(`Users Email: ${JSON.stringify(socket.decoded_token.email)}`);
+  const { email } = socket.decoded_token;
+
+  socket
+    .on('add word', onAddWord(email))
+    .on('notification-response', res => {
+      const { type, ...word } = JSON.parse(res);
+      console.log('Type: ', type);
+      console.log('Word: ', word);
+      console.log('Updating word...');
+      type == 'stageup' ? updateStage(word) : console.log('on reset word')
+    });
+
+  const sendWord = wordData => io.to(socket.id).emit('word', JSON.stringify(wordData[0]));
+  const loop = setInterval(() => {
+    console.count('Check words');
+    getScheduledWord(email).then(res => {
+      if(res.length != 0) {
+        sendWord(res)
+        console.count(`Pushed to ${email}`);
+      }
+    });
+  }, 7000);
+
+  socket.on('disconnect', () => clearInterval(loop))
 }
 
 server.listen(3000);
