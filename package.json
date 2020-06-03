@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Herman Streltsov",
+  "author": {
+    "name": "Herman Streltsov",
+    "email": "mail@streltsov.dev",
+    "url": "https://streltsov.dev"
+  },
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
