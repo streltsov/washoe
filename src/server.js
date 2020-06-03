@@ -72,7 +72,7 @@ function onAuthenticated(socket) {
         console.count(`Pushed to ${email}`);
       }
     });
-  }, 7000);
+  }, 120000);
 
   socket.on('disconnect', () => clearInterval(loop))
 }
