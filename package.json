@@ -12,6 +12,7 @@
   "dependencies": {
     "@marblejs/core": "^3.3.0",
     "@marblejs/middleware-body": "^3.3.0",
+    "@marblejs/middleware-jwt": "^3.3.0",
     "@marblejs/middleware-logger": "^3.3.0",
     "dotenv": "^8.2.0",
     "fp-ts": "^2.7.1",
