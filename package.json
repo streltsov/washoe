@@ -2,7 +2,6 @@
   "name": "washoe",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "author": {
     "name": "Herman Streltsov",
     "email": "mail@streltsov.dev",
