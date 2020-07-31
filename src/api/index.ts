@@ -1,6 +1,6 @@
 import { combineRoutes } from '@marblejs/core';
-import { signup$ } from './signup';
+import { login$ } from './login';
 
 export const api$ = combineRoutes('/api/v1', [
-  signup$
+  login$
 ]);
