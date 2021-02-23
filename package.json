@@ -22,9 +22,7 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.0.3",
     "rxjs": "^6.6.0",
-    "sanctuary": "^3.0.0",
-    "socket.io": "^2.3.0",
-    "socketio-jwt": "^4.5.0"
+    "sanctuary": "^3.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.15.2",
