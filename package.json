@@ -7,6 +7,7 @@
     "@marblejs/core": "^3.4.9",
     "@marblejs/middleware-body": "^3.4.9",
     "@marblejs/middleware-logger": "^3.4.9",
+    "chalk": "^3.0.0",
     "fp-ts": "^2.9.5",
     "mongoose": "^5.12.2"
   },
