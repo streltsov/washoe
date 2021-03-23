@@ -1,3 +1,4 @@
+import { connectToDatabase } from './connection/database';
 import { createServer } from "@marblejs/core";
 import { listener } from "./http.listener";
 import { IO } from "fp-ts/lib/IO";
@@ -11,4 +12,5 @@ const server = createServer({
 const main: IO<void> = async () =>
   await (await server)();
 
-main();
+connectToDatabase()
+  .then(main)
