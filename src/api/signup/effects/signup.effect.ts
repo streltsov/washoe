@@ -15,7 +15,6 @@ export const signupEffect$: HttpEffect = req$ =>
    req$.pipe(
       use(validator$),
       map(({ body }) =>  body),
-      tap(console.log),
       switchMap(user => User.create(user)),
       map(response => ({ body: response })),
       catchError(() => throwError(
