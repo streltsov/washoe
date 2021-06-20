@@ -7,5 +7,3 @@ export const signup$ = r.pipe(
   r.matchType('POST'),
   r.useEffect(signupEffect$)
 );
-
-// export const auth$ = combineRoutes('/auth', [login$]);
